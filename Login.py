@@ -21,8 +21,8 @@ class Login:
         self.window.geometry('1166x718')
 
         # Set fullscreen default or not
-        # window.state('zoomed')  # Win
         isFull = False
+        # self.window.state('zoomed')  # Win
         self.window.attributes('-zoomed', isFull) # Linux
         
         isResize = False
@@ -157,4 +157,4 @@ def page():
     Login(window)
     window.mainloop()
 
-#page()
+page()
