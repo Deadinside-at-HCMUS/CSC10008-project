@@ -21,9 +21,9 @@ class Login:
         self.window.geometry('1166x718')
 
         # Set fullscreen default or not
-        #self.window.state('zoomed')  # Win
         isFull = False
-        # self.window.attributes('-zoomed', isFull) # Linux
+        # self.window.state('zoomed')  # Win
+        self.window.attributes('-zoomed', isFull) # Linux
         
         isResize = False
         # Set button close, minizmze button beside x button
@@ -159,5 +159,3 @@ def page():
     window.mainloop()
 
 # page()
-
-
