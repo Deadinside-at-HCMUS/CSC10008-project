@@ -14,23 +14,23 @@ class Login:
         # Rename window title
         self.window.title('Login Page')
         # Changing window icon
-        icon = ImageTk.PhotoImage(file='./images/cat.ico')
-        self.window.iconphoto(False, icon)
+        # icon = ImageTk.PhotoImage(file='D:/Coding/Python/Socket_Main/CSC10008-project/images/cat.ico') # Linux
+        # self.window.iconphoto(False, icon)
 
         # Set window size
         self.window.geometry('1166x718')
 
         # Set fullscreen default or not
-        # window.state('zoomed')  # Win
+        #self.window.state('zoomed')  # Win
         isFull = False
-        self.window.attributes('-zoomed', isFull) # Linux
+        # self.window.attributes('-zoomed', isFull) # Linux
         
         isResize = False
         # Set button close, minizmze button beside x button
         self.window.resizable(isResize, isResize)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/backgroundB.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.window, image=photo)
         self.bg_panel.image = photo
@@ -52,14 +52,14 @@ class Login:
         self.heading.place(x=80, y=60, width=400, height=30)
 
         # Left side image
-        self.side_image = Image.open('./images/vector.png')
+        self.side_image = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/vector.png')
         photo = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.side_image_label.image = photo
         self.side_image_label.place(x=5, y=100)
 
         # Sign in image
-        self.sign_in_image = Image.open('./images/hyy.png')
+        self.sign_in_image = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/hyy.png')
         photo = ImageTk.PhotoImage(self.sign_in_image)
         self.sign_in_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.sign_in_image_label.image = photo
@@ -82,14 +82,14 @@ class Login:
         self.username_line.place(x=550, y=359)
 
         # Username Icon
-        self.username_icon = Image.open('./images/username_icon.png')
+        self.username_icon = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/username_icon.png')
         photo = ImageTk.PhotoImage(self.username_icon)
         self.username_icon_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.username_icon_label.image = photo
         self.username_icon_label.place(x=550, y=332)
 
         # Login button
-        self.lgn_button = Image.open('./images/btn1.png')
+        self.lgn_button = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/btn1.png')
         photo = ImageTk.PhotoImage(self.lgn_button)
         self.lgn_button_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.lgn_button_label.image = photo
@@ -109,7 +109,7 @@ class Login:
                                 relief=FLAT, borderwidth=0, background=WHITE, fg=DARK_GRAY, highlightthickness=0,)
         self.sign_label.place(x=600, y=560)
 
-        self.signup_img = ImageTk.PhotoImage(file='./images/register.png')
+        self.signup_img = ImageTk.PhotoImage(file='D:/Coding/Python/Socket_Main/CSC10008-project/images/register.png')
         self.signup_button_label = Button(self.lgn_frame, image=self.signup_img, bg=WHITE, cursor="hand2",
                                           borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,)
         self.signup_button_label.place(x=740, y=550, width=120, height=35)
@@ -127,15 +127,15 @@ class Login:
         self.password_line.place(x=550, y=440)
 
         # Password Icon
-        self.password_icon = Image.open('./images/password_icon.png')
+        self.password_icon = Image.open('D:/Coding/Python/Socket_Main/CSC10008-project/images/password_icon.png')
         photo = ImageTk.PhotoImage(self.password_icon)
         self.password_icon_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.password_icon_label.image = photo
         self.password_icon_label.place(x=550, y=414)
 
         # Show/hide password
-        self.show_image = ImageTk.PhotoImage(file='./images/show.png')
-        self.hide_image = ImageTk.PhotoImage(file='./images/hide.png')   
+        self.show_image = ImageTk.PhotoImage(file='D:/Coding/Python/Socket_Main/CSC10008-project/images/show.png')
+        self.hide_image = ImageTk.PhotoImage(file='D:/Coding/Python/Socket_Main/CSC10008-project/images/hide.png')   
         self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_button.place(x=860, y=420)
@@ -155,6 +155,9 @@ class Login:
 def page():
     window = Tk()
     Login(window)
+    window.iconbitmap('D:/Coding/Python/Socket_Main/CSC10008-project/images/cat.ico') # Win
     window.mainloop()
 
-#page()
+# page()
+
+
