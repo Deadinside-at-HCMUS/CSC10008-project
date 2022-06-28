@@ -14,23 +14,22 @@ class Login:
         # Rename window title
         self.window.title('Login Page')
         # Changing window icon
-        icon = ImageTk.PhotoImage(file='./images/cat.ico')
+        icon = ImageTk.PhotoImage(file='C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/cat.ico')
         self.window.iconphoto(False, icon)
 
         # Set window size
         self.window.geometry('1166x718')
 
         # Set fullscreen default or not
-        # window.state('zoomed')  # Win
+        self.window.state('zoomed')  # Win
         isFull = False
-        self.window.attributes('-zoomed', isFull) # Linux
         
         isResize = False
         # Set button close, minizmze button beside x button
         self.window.resizable(isResize, isResize)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/backgroundB.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.window, image=photo)
         self.bg_panel.image = photo
@@ -52,18 +51,18 @@ class Login:
         self.heading.place(x=80, y=60, width=400, height=30)
 
         # Left side image
-        self.side_image = Image.open('./images/vector.png')
+        self.side_image = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/catpng.png')
         photo = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.side_image_label.image = photo
         self.side_image_label.place(x=5, y=100)
 
         # Sign in image
-        self.sign_in_image = Image.open('./images/hyy.png')
+        self.sign_in_image = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/catvec.png')
         photo = ImageTk.PhotoImage(self.sign_in_image)
         self.sign_in_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.sign_in_image_label.image = photo
-        self.sign_in_image_label.place(x=620, y=130)
+        self.sign_in_image_label.place(x=635, y=130)
 
         self.sign_in_label = Label(self.lgn_frame, text='Sign In', 
                                    font=('yu gothic ui', 17, 'bold'), bg=WHITE, fg=BLUE)
@@ -82,37 +81,37 @@ class Login:
         self.username_line.place(x=550, y=359)
 
         # Username Icon
-        self.username_icon = Image.open('./images/username_icon.png')
+        self.username_icon = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/username_icon.png')
         photo = ImageTk.PhotoImage(self.username_icon)
         self.username_icon_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.username_icon_label.image = photo
         self.username_icon_label.place(x=550, y=332)
 
         # Login button
-        self.lgn_button = Image.open('./images/btn1.png')
+        self.lgn_button = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/btn1.png')
         photo = ImageTk.PhotoImage(self.lgn_button)
         self.lgn_button_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.lgn_button_label.image = photo
-        self.lgn_button_label.place(x=550, y=450)
+        self.lgn_button_label.place(x=555, y=450)
         self.login = Button(self.lgn_button_label, text='LOGIN', font=("yu gothic ui", 13, "bold"), width=20, bd=0,
                             bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0)
-        self.login.place(x=20, y=10)
+        self.login.place(x=40, y=10)
 
         # Forgot password
         self.forgot_button = Button(self.lgn_frame, text="Forgot Password?",
                                     font=("yu gothic ui", 13, "bold underline"), fg=BLUE, relief=FLAT, highlightthickness=0,
                                     activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
-        self.forgot_button.place(x=610, y=510)        
+        self.forgot_button.place(x=620, y=510)        
 
         # Sign up
         self.sign_label = Label(self.lgn_frame, text='No account yet?', font=("yu gothic ui", 11, "bold"),
                                 relief=FLAT, borderwidth=0, background=WHITE, fg=DARK_GRAY, highlightthickness=0,)
         self.sign_label.place(x=600, y=560)
 
-        self.signup_img = ImageTk.PhotoImage(file='./images/register.png')
+        self.signup_img = ImageTk.PhotoImage(file='C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/signup.png')
         self.signup_button_label = Button(self.lgn_frame, image=self.signup_img, bg=WHITE, cursor="hand2",
                                           borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,)
-        self.signup_button_label.place(x=740, y=550, width=120, height=35)
+        self.signup_button_label.place(x=720, y=554, width=120, height=35)
 
         # Password
         self.password_label = Label(self.lgn_frame, text='Password', bg=WHITE, fg=DARK_GRAY, 
@@ -127,15 +126,15 @@ class Login:
         self.password_line.place(x=550, y=440)
 
         # Password Icon
-        self.password_icon = Image.open('./images/password_icon.png')
+        self.password_icon = Image.open('C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/password_icon.png')
         photo = ImageTk.PhotoImage(self.password_icon)
         self.password_icon_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.password_icon_label.image = photo
         self.password_icon_label.place(x=550, y=414)
 
         # Show/hide password
-        self.show_image = ImageTk.PhotoImage(file='./images/show.png')
-        self.hide_image = ImageTk.PhotoImage(file='./images/hide.png')   
+        self.show_image = ImageTk.PhotoImage(file='C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/show.png')
+        self.hide_image = ImageTk.PhotoImage(file='C:/Users/Nguyen Hi Huu/source/repos/Python_Socket/CSC10008-project/images/hide.png')   
         self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_button.place(x=860, y=420)
@@ -157,4 +156,4 @@ def page():
     Login(window)
     window.mainloop()
 
-#page()
+page()
