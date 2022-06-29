@@ -139,13 +139,15 @@ class SignUp:
 
         # Show/hide password
         self.show_image = ImageTk.PhotoImage(file='./images/show.png')
-        self.hide_image = ImageTk.PhotoImage(file='./images/hide.png')   
+        self.hide_image = ImageTk.PhotoImage(file='./images/hide.png')
         self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show_password, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_button.place(x=860, y=380)
 
         # Show/hide confirm password
-        self.show_confirm_button = Button(self.lgn_frame, image=self.show_image, command=self.show_confirm_password, relief=FLAT,
+        self.show_confirm_image = ImageTk.PhotoImage(file='./images/show.png')
+        self.hide_confirm_image = ImageTk.PhotoImage(file='./images/hide.png')
+        self.show_confirm_button = Button(self.lgn_frame, image=self.show_confirm_image, command=self.show_confirm_password, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_confirm_button.place(x=860, y=461)
 
@@ -160,21 +162,21 @@ class SignUp:
         self.password_entry.config(show='')
 
     def hide_password(self):
-        self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show_confirm_password, relief=FLAT,
+        self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show_password, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
-        self.show_button.place(x=860, y=461)
+        self.show_button.place(x=860, y=380)
         self.password_entry.config(show='*')
 
     def show_confirm_password(self):
-        self.hide_confirm_button = Button(self.lgn_frame, image=self.hide_image, command=self.hide_confirm_password, relief=FLAT,
+        self.hide_confirm_button = Button(self.lgn_frame, image=self.hide_confirm_image, command=self.hide_confirm_password, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.hide_confirm_button.place(x=860, y=461)
         self.confirm_password_entry.config(show='')
 
     def hide_confirm_password(self):
-        self.show_confirm_button = Button(self.lgn_frame, image=self.show_image, command=self.show_confirm_password, relief=FLAT,
+        self.show_confirm_button = Button(self.lgn_frame, image=self.show_confirm_image, command=self.show_confirm_password, relief=FLAT,
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
-        self.show_confirm_button.place(x=860, y=380)
+        self.show_confirm_button.place(x=860, y=461)
         self.confirm_password_entry.config(show='*')
 
     def signup_action(self):
