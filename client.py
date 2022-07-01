@@ -1,5 +1,4 @@
 import socket
-import sys
 import threading
 from tkinter import *
 from PIL import ImageTk, Image

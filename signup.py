@@ -44,14 +44,14 @@ class SignUp:
         self.heading.place(x=80, y=60, width=400, height=30)
 
         # Left side image
-        self.side_image = Image.open('./images/left.png')
+        self.side_image = Image.open('./images/computervec.png')
         photo = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.side_image_label.image = photo
         self.side_image_label.place(x=5, y=100)
 
         # Sign up image
-        self.sign_up_image = Image.open('./images/signin.png')
+        self.sign_up_image = Image.open('./images/emptyuser.png')
         photo = ImageTk.PhotoImage(self.sign_up_image)
         self.sign_up_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.sign_up_image_label.image = photo
