@@ -1,8 +1,4 @@
 import socket
-import threading
-import sys
-import re
-import json
 
 # Create Socket (TCP) Connection
 IP = '127.0.0.1'
