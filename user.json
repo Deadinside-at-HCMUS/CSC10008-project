@@ -1,14 +1,10 @@
 [
     {
-        "username": "leanhthu",
-        "password": "pass"
+        "username": "admin123",
+        "password": "pass123"
     },
     {
-        "username": "huynhducthien",
-        "password": "mom"
-    },
-    {
-        "username": "nguyenhihuu",
-        "password": "wibu"
+        "username": "test123",
+        "password": "test123"
     }
 ]

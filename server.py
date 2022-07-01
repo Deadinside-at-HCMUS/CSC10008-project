@@ -36,7 +36,7 @@ def checkSpecialChar(string):
     return False
 
 
-def check(username, password):
+def checkValid(username, password):
     if len(username) < 5:
         return False
     if re.findall('[A-Z]', username) or checkSpecialChar(username):
@@ -44,6 +44,19 @@ def check(username, password):
     if len(password) < 3:
         return False
     return True
+
+def initNote(username):
+    file = open("./note.json")
+    users_note = json.load(file)
+    users_note[f"{username}"] = {
+        "note": [],
+        "file": [],
+        "image": []
+    }
+    json_obj = json.dumps(users_note, indent=4)
+    with open("note.json", "w") as outfile:
+        outfile.write(json_obj)
+    file.close()
 
 def handle(client):
     while True:
@@ -57,7 +70,7 @@ def handle(client):
                 user_exist = False
                 username = user_data[1]
                 password = user_data[2]
-                if check(username, password):
+                if checkValid(username, password):
                     for user in users_data:
                         if user["username"] == username:
                             if user["password"] == password:
@@ -83,7 +96,7 @@ def handle(client):
                 username = user_data[1]
                 password = user_data[2]
                 confirm_pw = user_data[3]
-                if check(username, password):
+                if checkValid(username, password):
                     user_exist = False
                     for user in users_data:
                         if (user["username"] == username):
@@ -94,7 +107,7 @@ def handle(client):
                         if confirm_pw == password:
                             user_info = {"username": username,
                                             "password": password}
-                            # init new user's note
+                            initNote(username)
                             users_data.append(user_info)
                             client.send("Register successfully".encode(FORMAT))
                         else:

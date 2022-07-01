@@ -5,6 +5,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from signup import SignUp
+from note_app import Note
 
 # Client set up
 IP = '127.0.0.1'
@@ -172,7 +173,7 @@ class Client():
     
     def login_action(self):
         while self.running:
-            try:
+            # try:
                 username = self.username_entry.get()
                 password = self.password_entry.get()
                 self.user_info = str(["LOG-IN", username, password])
@@ -183,15 +184,15 @@ class Client():
 
                 if response == "Login successful!":
                     if self.gui_done:
-                        break
+                        Note(self.root, self.client, self.user_info)
                 else:
                     break
-            except ConnectionAbortedError:
-                break
-            except:
-                print("[ERROR]: An error occurred!")
-                self.client.close()
-                break
+            # except ConnectionAbortedError:
+            #     break
+            # except:
+            #     print("[ERROR]: An error occurred!")
+            #     self.client.close()
+            #     break
 
     def sign_up(self):
         self.master = Toplevel()
