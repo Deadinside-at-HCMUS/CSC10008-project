@@ -10,7 +10,7 @@ from note_app import Note
 IP = '127.0.0.1'
 PORT = 5005
 BUFFER_SIZE = 2048
-FORMAT = 'ascii'
+FORMAT = 'utf-8'
 
 # Colors
 WHITE = '#ffffff'
@@ -53,7 +53,7 @@ class Client():
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.root, image=photo)
         self.bg_panel.image = photo
-        self.bg_panel.pack(fill='both', expand='yes')
+        self.bg_panel.grid(row=1)
 
         # Login frame
         self.lgn_frame = Frame(self.root, bg=WHITE, width=950, height=600)
@@ -195,7 +195,7 @@ class Client():
 
     def sign_up(self):
         self.master = Toplevel()
-        SignUp(self.master)
+        SignUp(self.master, self.client)
     
     def stop(self):
         self.running = False

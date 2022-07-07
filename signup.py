@@ -11,9 +11,13 @@ BLUE = '#3047ff'
 LIGHT_GRAY = '#bdb9b1'
 DARK_GRAY = '#4f4e4d'
 
+FORMAT = 'utf-8'
+BUFFER_SIZE = 2048
+
 class SignUp:
-    def __init__(self, root):
+    def __init__(self, root, client):
         self.root = root
+        self.client = client
         # Rename window title
         self.root.title('Sign Up Page')
         # Changing window icon
@@ -180,14 +184,6 @@ class SignUp:
         self.confirm_password_entry.config(show='*')
 
     def signup_action(self):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        IP = '127.0.0.1'
-        PORT = 5005
-        FORMAT = 'ascii'
-        BUFFER_SIZE = 2048
-
-        self.client.connect((IP, PORT))
-
         self.username = self.username_entry.get()
         self.password = self.password_entry.get()
         self.confirm_pw = self.confirm_password_entry.get()

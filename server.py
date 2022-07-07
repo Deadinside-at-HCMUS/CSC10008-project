@@ -2,13 +2,14 @@ import socket
 import threading
 import sys
 import re
+import os
 import json
 
 # Create Socket (TCP) Connection
 IP = '127.0.0.1'
 PORT = 5005
-BUFFER_SIZE = 2048
-FORMAT = 'ascii'
+BUFFER_SIZE = 4100000
+FORMAT = 'utf-8'
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -58,6 +59,130 @@ def initNote(username):
         outfile.write(json_obj)
     file.close()
 
+def add_new_note(username, title, content, note_id):
+    file = open("note.json")
+    users_note = json.load(file)
+    users_note[username]["note"].append(
+        {"_id": note_id, "title": title, "content": content})
+    json_obj = json.dumps(users_note, indent=4)
+    with open("note.json", "w") as outfile:
+        outfile.write(json_obj)
+    file.close()
+
+def add_new_image(username, image, imageID):
+    file = open("note.json")
+    users_image = json.load(file)
+    users_image[username]["image"].append({"_id": imageID, "name": image})
+    json_obj = json.dumps(users_image, indent=4)
+    with open("note.json", "w") as outfile:
+        outfile.write(json_obj)
+    file.close()
+
+def add_new_file(username, files, fileID):
+    file = open("note.json")
+    users_file = json.load(file)
+    users_file[username]["file"].append({"_id": fileID, "name": files})
+    json_obj = json.dumps(users_file, indent=4)
+    with open("note.json", "w") as outfile:
+        outfile.write(json_obj)
+    file.close()
+
+def del_note(username, note_index, type):
+    file = open("note.json")
+    users_note = json.load(file)
+    #-------------------------------------------------#
+    if type == "Text":
+        for note in users_note[username]["note"]:
+            if note["_id"] == note_index:
+                # note_index = users_note[username]["note"].index(user)
+                users_note[username]["note"].remove(note)
+                break
+    elif type == "Image":
+        for img in users_note[username]["image"]:
+            if img["_id"] == note_index:
+                os.remove(f"./user_data/{username}/{img['name']}")
+                users_note[username]["image"].remove(img)
+                break
+    else:
+        for file in users_note[username]["file"]:
+            if file["_id"] == note_index:
+                os.remove(f"./user_data/{username}/{file['name']}")
+                users_note[username]["file"].remove(file)
+                break
+    #-------------------------------------------------#
+    json_obj = json.dumps(users_note, indent=4)
+    with open("note.json", "w") as outfile:
+        outfile.write(json_obj)
+    file.close()
+
+def is_exist_note(username, title):
+    file = open("note.json")
+    users_note = json.load(file)
+    #-------------------------------------------------#
+    for user in users_note[username]["note"]:
+        if user["title"] == title:
+            return True
+    return False
+    #-------------------------------------------------#
+    file.close()
+
+def is_exist_image(username, image):
+    file = open("note.json")
+    users_image = json.load(file)
+
+    for user in users_image[username]["image"]:
+        if user["name"] == image:
+            return True
+    return False
+
+    file.close()
+
+def is_exist_file(username, files):
+    file = open("note.json")
+    users_file = json.load(file)
+
+    for user in users_file[username]["image"]:
+        if user["name"] == files:
+            return True
+    for user in users_file[username]["file"]:
+        if user["name"] == files:
+            return True
+    return False
+
+    file.close()
+
+def user_folder_create(filename):
+    isFile = os.path.isdir('./user_data')
+    if isFile:
+        path = f'./user_data/{filename}'
+        os.makedirs(path)
+    else:
+        os.makedirs('./user_data')
+        path = f'./user_data/{filename}'
+        os.makedirs(path)
+
+def load_user_note_data(username, client):
+    file = open("note.json")
+    user_note = json.load(file)
+    user_note = user_note[username]
+    client.send(str(user_note).encode(FORMAT))
+    file.close()
+
+def check_empty(filename):
+    if os.stat(filename).st_size == 0:
+        return True
+    return False
+
+if check_empty("user.json"):
+    file = open("user.json", "w")
+    file.write("[]")
+    file.close()
+if check_empty("note.json"):
+    file = open("note.json", "w")
+    file.write("{}")
+    file.close()
+
+
 def handle(client):
     while True:
         try:
@@ -79,6 +204,7 @@ def handle(client):
                                 with open("user.json", "w") as fo:
                                     fo.write(json_obj)
                                 client.send("Login successful!".encode(FORMAT))
+                                load_user_note_data(username, client)
                             else:
                                 client.send("Wrong password!".encode(FORMAT))
                             user_exist = True
@@ -89,7 +215,6 @@ def handle(client):
                     client.send("User does not exist!".encode(FORMAT))
                 file.close()
             elif mode == "SIGN-UP":
-                print("Receive sign up")
                 file = open("./user.json")
                 users_data = json.load(file)
                 user_exist = False
@@ -108,6 +233,7 @@ def handle(client):
                             user_info = {"username": username,
                                             "password": password}
                             initNote(username)
+                            user_folder_create(username)
                             users_data.append(user_info)
                             client.send("Register successfully".encode(FORMAT))
                         else:
@@ -118,12 +244,121 @@ def handle(client):
                 json_obj = json.dumps(users_data, indent=4)
                 with open("user.json", "w") as fo:
                     fo.write(json_obj)
-                file.close()            
+                file.close()
+            elif mode == "NOTE":
+                name = user_data[1]
+                note_topic = user_data[2]
+                note = user_data[3]
+                note_id = user_data[4]
+                if len(note_topic) > 0 and len(note) > 0:
+                    note_exist = is_exist_note(name, note_topic)
+                    if not note_exist:
+                        client.send(
+                            "Note successfully created!".encode(FORMAT))
+                        add_new_note(name, note_topic, note, note_id)
+                    else:
+                        client.send(
+                            "This title is already exist".encode(FORMAT))
+                else:
+                    client.send("Note Invalid!".encode(FORMAT))
+            elif mode == "DEL-NOTE":
+                name = user_data[1]
+                note_index = user_data[2]
+                type = user_data[3]
+                del_note(name, note_index, type)
+            elif mode == "DOWNLOAD":
+                username = user_data[1]
+                note_index = user_data[2]
+                type = user_data[3]
+                file = open("note.json")
+                users_note = json.load(file)
+                if type == "Image":
+                    for user in users_note[username]["image"]:
+                        if user["_id"] == note_index:
+                            with open(f"./user_data/{username}/{user['name']}", 'rb') as f:
+                                client.send(f.read())
+                                f.close()
+                            break
+                elif type == "File":
+                    for user in users_note[username]["file"]:
+                        if user["_id"] == note_index:
+                            with open(f"./user_data/{username}/{user['name']}", 'rb') as f:
+                                client.send(f.read())
+                                f.close()
+                            break
+                else:
+                    for user in users_note[username]["note"]:
+                        if user["_id"] == note_index:
+                            client.send(
+                                str([user["title"], user["content"]]).encode(FORMAT))
+                            break
+            elif mode == "IMAGE":
+                name = user_data[1]
+                image = user_data[2]
+                IDimage = user_data[3]
+                if len(image) > 0:
+                    image_exist = is_exist_image(name, image)
+                    if not image_exist:
+                        client.send(
+                            "Image successfully created!".encode(FORMAT))
+                        add_new_image(name, image, IDimage)
+                        with open(f'./user_data/{name}/' + image, 'wb') as f:
+                            data = client.recv(41000000)
+                            f.write(data)
+                            f.close()
+                    else:
+                        client.send(
+                            "This title is already exist".encode(FORMAT))
+            elif mode == "VIEW":
+                username = user_data[1]
+                note_id = user_data[2]
+                type = user_data[3]
+                #view_note(name, ID_file, type)
+                file = open("note.json")
+                users_note = json.load(file)
+                if type == "Image":
+                    for user in users_note[username]["image"]:
+                        # print(f'./user_data/{username}/' + user["name"])
+                        if user["_id"] == note_id:
+                            with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
+                                client.send(f.read())
+                                f.close()
+                            break
+                elif type == "File":
+                    for user in users_note[username]["file"]:
+                        if user["_id"] == note_id:
+                            with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
+                                client.send(f.read().encode(FORMAT))
+                                f.close()
+                            break
+                elif type == "Text":
+                    for user in users_note[username]["note"]:
+                        if user["_id"] == note_id:
+                            client.send(
+                                str([user["title"], user["content"]]).encode(FORMAT))
+                            break
+            elif mode == "FILE":
+                name = user_data[1]
+                file = user_data[2]
+                IDfile = user_data[3]
+                if len(file) > 0:
+                    file_exist = is_exist_file(name, file)
+                    if not file_exist:
+                        client.send(
+                            "File successfully created!".encode(FORMAT))
+                        add_new_file(name, file, IDfile)
+                        with open(f'./user_data/{name}/' + file, 'wb') as f:
+                            data = client.recv(4100000)
+                            f.write(data)
+                            f.close()
+                    else:
+                        client.send(
+                            "This title is already exist".encode(FORMAT))
+            else:
+                pass         
         except:
             if client in clients:
-                index = clients.index(client)
                 clients.remove(client)
-                users.remove(users[index])
                 client.close()
 
 def receive():
