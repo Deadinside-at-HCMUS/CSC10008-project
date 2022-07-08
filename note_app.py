@@ -298,7 +298,7 @@ class Note:
                     'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
                 self.topic_label.place(x=15, y=12)
                 self.topic_area = Label(self.win, text=Topic, font=(
-                    'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                    'yu gothic ui', 12), bg=WHITE)
                 self.topic_area.place(x=95, y=12)
 
                 self.input_label = Label(self.win, text='Notes:', font=(
@@ -328,7 +328,7 @@ class Note:
             self.client.send(
                 str(["DOWNLOAD", self.user_info[1], self.id, self.type]).encode(FORMAT))
             if self.type == "Text":
-                data = self.client.recv(BUFFER_SIZE0).decode(FORMAT)
+                data = self.client.recv(BUFFER_SIZE).decode(FORMAT)
                 data = eval(data)
                 print(data)
                 Topic = data[0]
@@ -341,7 +341,7 @@ class Note:
                 self.namefile = self.namefile.split('[Name]: ')
                 self.namefile = self.namefile[len(self.namefile) - 1]
                 with open(f"{file_path}/{self.namefile}", 'wb') as f:
-                    data = self.client.recv(BUFFER_SIZE0)
+                    data = self.client.recv(BUFFER_SIZE)
                     f.write(data)
                     f.close()
         except:
