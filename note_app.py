@@ -5,9 +5,11 @@ from tkinter import ttk
 from tkinter import scrolledtext
 from tkinter.filedialog import askdirectory, askopenfilename
 from tkinter.constants import *
-from PIL import ImageTk, Image
+from PIL import ImageTk, Image, ImageFile
 import threading
 import io
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # Colors
 WHITE = '#ffffff'
@@ -22,7 +24,7 @@ PINK = '#ff647f'
 IP = '127.0.0.1'
 PORT = 5005
 FORMAT = 'utf-8'
-BUFFER_SIZE = 2048
+BUFFER_SIZE = 4100000
 
 class Note:
     def __init__(self, root, client, user_info):
@@ -85,7 +87,7 @@ class Note:
         scrollbar.grid(row=0, column=1, sticky='ns')
 
         #====================== Load Data ================================#
-        self.client_notes = self.client.recv(4100000).decode(FORMAT)
+        self.client_notes = self.client.recv(BUFFER_SIZE).decode(FORMAT)
         self.client_notes = eval(self.client_notes)
         notes = self.client_notes['note']
         files = self.client_notes['file']
@@ -113,7 +115,7 @@ class Note:
         # User
         self.user = Label(self.frame1, text=f'User: {self.user_info[1]}', fg=DARK_GRAY,
                           bg=WHITE, font=('yu gothic ui', 16, 'bold'))
-        self.user.place(x=650, y=50)
+        self.user.place(x=620, y=50)
         # Left side image
         self.side_image = Image.open('./images/takenote.png')
         leftPhoto = ImageTk.PhotoImage(self.side_image)
@@ -127,7 +129,7 @@ class Note:
                                 cursor="hand2", bg=BLUE, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.add_text)
         self.add_txt_btn.place(x=0, y=20)
 
-        self.add_files_btn = Button(self.frame2, width=12, pady=8, text='Add file', font=('yu gothic ui', 13, 'bold'),
+        self.add_files_btn = Button(self.frame2, width=12, pady=8, text='Add File', font=('yu gothic ui', 13, 'bold'),
                                     cursor="hand2", bg=BLUE, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.add_file)
         self.add_files_btn.place(x=0, y=80)
 
@@ -172,14 +174,14 @@ class Note:
         self.win.resizable(0, 0)
 
         self.topic_label = Label(self.win, text='Topic:', font=(
-            'yu gothic ui', 12, 'bold'), fg='black', bg=WHITE)
+            'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
         self.topic_label.place(x=10, y=10)
         self.topic_area = Text(self.win, height=1)
         self.topic_area.config(font=("yu gothic ui", 14))
         self.topic_area.pack(padx=(80, 20), pady=10)
 
         self.input_label = Label(self.win, text='Notes:', font=(
-            'yu gothic ui', 12, 'bold'), fg='black', bg=WHITE)
+            'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
         self.input_label.place(x=10, y=150)
         self.input_area = Text(self.win, height=10)
         self.input_area.config(font=("yu gothic ui", 14))
@@ -268,15 +270,14 @@ class Note:
             self.type = self.tree.item(self.task_index)['values'][1]
             self.namefile = self.tree.item(self.task_index)['values'][2]
             self.namefile = self.namefile[8:]
-            self.client.send(
-                str(["VIEW", self.user_info[1], self.id, self.type]).encode(FORMAT))
+            self.client.send(str(["VIEW", self.user_info[1], self.id, self.type]).encode(FORMAT))
             if self.type == "Image":
-                data = self.client.recv(4100000)
+                data = self.client.recv(BUFFER_SIZE)
                 img = io.BytesIO(data)
                 image = Image.open(img)
                 image.show()
             elif self.type == "Text":
-                data = self.client.recv(4100000)
+                data = self.client.recv(BUFFER_SIZE)
                 data = eval(data)
                 Topic = data[0]
                 Content = data[1]
@@ -294,20 +295,20 @@ class Note:
                 self.win.resizable(0, 0)
 
                 self.topic_label = Label(self.win, text='Topic:', font=(
-                    'Helvetica', 12, 'bold'), fg='black', bg=WHITE)
-                self.topic_label.place(x=0, y=0)
+                    'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                self.topic_label.place(x=15, y=12)
                 self.topic_area = Label(self.win, text=Topic, font=(
-                    'Helvetica', 12, 'bold'), fg='black', bg=WHITE)
-                self.topic_area.place(x=80, y=0)
+                    'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                self.topic_area.place(x=95, y=12)
 
-                self.input_label = Label(self.win, text='NOTES:', font=(
-                    'Helvetica', 12, 'bold'), fg='black', bg=WHITE)
-                self.input_label.place(x=0, y=50)
+                self.input_label = Label(self.win, text='Notes:', font=(
+                    'yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                self.input_label.place(x=15, y=52)
 
                 self.text_area = scrolledtext.ScrolledText(
-                    self.win, width=42, height=12, font=("Helvetica", 12))
-                # self.text_area.grid(column=0, pady=10, padx=10)
-                self.text_area.place(x=80, y=50)
+                    self.win, width=35, height=12, font=('yu gothic ui', 12))
+                self.text_area.grid(column=0, pady=10, padx=10)
+                self.text_area.place(x=95, y=52)
                 self.text_area.insert(INSERT, Content)
                 self.text_area.config(state=DISABLED)
         except:
@@ -327,7 +328,7 @@ class Note:
             self.client.send(
                 str(["DOWNLOAD", self.user_info[1], self.id, self.type]).encode(FORMAT))
             if self.type == "Text":
-                data = self.client.recv(41000000).decode(FORMAT)
+                data = self.client.recv(BUFFER_SIZE0).decode(FORMAT)
                 data = eval(data)
                 print(data)
                 Topic = data[0]
@@ -340,7 +341,7 @@ class Note:
                 self.namefile = self.namefile.split('[Name]: ')
                 self.namefile = self.namefile[len(self.namefile) - 1]
                 with open(f"{file_path}/{self.namefile}", 'wb') as f:
-                    data = self.client.recv(41000000)
+                    data = self.client.recv(BUFFER_SIZE0)
                     f.write(data)
                     f.close()
         except:

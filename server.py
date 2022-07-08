@@ -313,12 +313,10 @@ def handle(client):
                 username = user_data[1]
                 note_id = user_data[2]
                 type = user_data[3]
-                #view_note(name, ID_file, type)
                 file = open("note.json")
                 users_note = json.load(file)
                 if type == "Image":
                     for user in users_note[username]["image"]:
-                        # print(f'./user_data/{username}/' + user["name"])
                         if user["_id"] == note_id:
                             with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
                                 client.send(f.read())
