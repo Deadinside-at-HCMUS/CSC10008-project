@@ -4,7 +4,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from signup import SignUp
-from note_app import Note
+from note import Note
 
 # Client set up
 IP = '127.0.0.1'
@@ -22,7 +22,7 @@ DARK_GRAY = '#4f4e4d'
 
 class Client():
     def __init__(self, host, port):
-        # SOCKET CONNECTION
+        # Socket connection
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((host, port))
 
@@ -111,22 +111,6 @@ class Client():
                             bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0, command=self.login_action)
         self.login.place(x=20, y=10)
 
-        # Forgot password
-        self.forgot_button = Button(self.lgn_frame, text="Forgot Password?",
-                                    font=("yu gothic ui", 13, "bold underline"), fg=BLUE, relief=FLAT, highlightthickness=0,
-                                    activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
-        self.forgot_button.place(x=610, y=510)        
-
-        # Sign up
-        self.sign_label = Label(self.lgn_frame, text='No account yet?', font=("yu gothic ui", 11, "bold"),
-                                relief=FLAT, borderwidth=0, background=WHITE, fg=DARK_GRAY, highlightthickness=0,)
-        self.sign_label.place(x=585, y=560)
-
-        self.signup_img = ImageTk.PhotoImage(file='./images/register.png')
-        self.signup_button_label = Button(self.lgn_frame, image=self.signup_img, bg=WHITE, cursor="hand2",
-                                          borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.sign_up)
-        self.signup_button_label.place(x=725, y=550, width=100, height=35)
-
         # Password
         self.password_label = Label(self.lgn_frame, text='Password', bg=WHITE, fg=DARK_GRAY, 
                                     font=('yu gothic ui', 13, 'bold'))
@@ -153,7 +137,23 @@ class Client():
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_button.place(x=860, y=420)
 
-        ######
+        # Forgot password
+        self.forgot_button = Button(self.lgn_frame, text="Forgot Password?",
+                                    font=("yu gothic ui", 13, "bold underline"), fg=BLUE, relief=FLAT, highlightthickness=0,
+                                    activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
+        self.forgot_button.place(x=610, y=510)        
+
+        # Sign up
+        self.sign_label = Label(self.lgn_frame, text='No account yet?', font=("yu gothic ui", 11, "bold"),
+                                relief=FLAT, borderwidth=0, background=WHITE, fg=DARK_GRAY, highlightthickness=0,)
+        self.sign_label.place(x=585, y=560)
+
+        self.signup_img = ImageTk.PhotoImage(file='./images/register.png')
+        self.signup_button_label = Button(self.lgn_frame, image=self.signup_img, bg=WHITE, cursor="hand2",
+                                          borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.sign_up)
+        self.signup_button_label.place(x=725, y=550, width=100, height=35)
+
+        ###
         self.gui_done = True
         self.root.protocol("WM_DELETE_WINDOW", self.stop)
         self.root.mainloop()
@@ -172,7 +172,7 @@ class Client():
     
     def login_action(self):
         while self.running:
-            # try:
+            try:
                 username = self.username_entry.get()
                 password = self.password_entry.get()
                 self.user_info = str(["LOG-IN", username, password])
@@ -186,12 +186,12 @@ class Client():
                         Note(self.root, self.client, self.user_info)
                 else:
                     break
-            # except ConnectionAbortedError:
-            #     break
-            # except:
-            #     print("[ERROR]: An error occurred!")
-            #     self.client.close()
-            #     break
+            except ConnectionAbortedError:
+                break
+            except:
+                print("[ERROR]: An error occurred!")
+                self.client.close()
+                break
 
     def sign_up(self):
         self.master = Toplevel()

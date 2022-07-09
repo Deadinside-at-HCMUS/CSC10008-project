@@ -26,7 +26,7 @@ PORT = 5005
 FORMAT = 'utf-8'
 BUFFER_SIZE = 4100000
 
-class Note:
+class Note():
     def __init__(self, root, client, user_info):
         self.client = client
         self.running = True
