@@ -26,7 +26,7 @@ PORT = 5005
 FORMAT = 'utf-8'
 BUFFER_SIZE = 4100000
 
-class Note():
+class NoteApp():
     def __init__(self, root, client, user_info):
         self.client = client
         self.running = True
@@ -197,7 +197,7 @@ class Note():
             self.note_topic = f"{self.topic_area.get('1.0', 'end').strip()}"
             self.note = f"{self.input_area.get('1.0', 'end').strip()}"
             self.user_note = str(
-                ["NOTE", self.user_info[1], self.note_topic, self.note, self.countID])
+                ["ADD-NOTE", self.user_info[1], self.note_topic, self.note, self.countID])
             self.client.send(self.user_note.encode(FORMAT))
             response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
             if response == "Note successfully created!":
@@ -224,7 +224,7 @@ class Note():
             self.id = self.tree.item(self.task_index)['values'][0]
             self.type = self.tree.item(self.task_index)['values'][1]
             self.client.send(
-                str(["DEL-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
+                str(["DELETE-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             self.tree.delete(self.task_index)
         except:
             messagebox.showwarning(
@@ -241,7 +241,7 @@ class Note():
         self.image = img[len(img) - 1]
         while self.running:
             self.user_image = str(
-                ["IMAGE", self.user_info[1], self.image, self.countID])
+                ["ADD-IMAGE", self.user_info[1], self.image, self.countID])
             self.client.send(self.user_image.encode(FORMAT))
             response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
             if response == "Image successfully created!":
@@ -270,7 +270,7 @@ class Note():
             self.type = self.tree.item(self.task_index)['values'][1]
             self.namefile = self.tree.item(self.task_index)['values'][2]
             self.namefile = self.namefile[8:]
-            self.client.send(str(["VIEW", self.user_info[1], self.id, self.type]).encode(FORMAT))
+            self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             if self.type == "Image":
                 data = self.client.recv(BUFFER_SIZE)
                 img = io.BytesIO(data)
@@ -326,7 +326,7 @@ class Note():
             self.id = self.tree.item(self.task_index)['values'][0]
             self.type = self.tree.item(self.task_index)['values'][1]
             self.client.send(
-                str(["DOWNLOAD", self.user_info[1], self.id, self.type]).encode(FORMAT))
+                str(["DOWNLOAD-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             if self.type == "Text":
                 data = self.client.recv(BUFFER_SIZE).decode(FORMAT)
                 data = eval(data)
@@ -359,7 +359,7 @@ class Note():
         self.file = self.file[len(self.file) - 1]
         while self.running:
             self.user_file = str(
-                ["FILE", self.user_info[1], self.file, self.countID])
+                ["ADD-FILE", self.user_info[1], self.file, self.countID])
             self.client.send(self.user_file.encode(FORMAT))
             response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
             if response == "File successfully created!":

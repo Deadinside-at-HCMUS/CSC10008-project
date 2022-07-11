@@ -4,7 +4,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from signup import SignUp
-from note import Note
+from note import NoteApp
 
 # Client set up
 IP = '127.0.0.1'
@@ -153,7 +153,7 @@ class Client():
                                           borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.sign_up)
         self.signup_button_label.place(x=725, y=550, width=100, height=35)
 
-        ###
+        #==================#
         self.gui_done = True
         self.root.protocol("WM_DELETE_WINDOW", self.stop)
         self.root.mainloop()
@@ -183,7 +183,7 @@ class Client():
 
                 if response == "Login successful!":
                     if self.gui_done:
-                        Note(self.root, self.client, self.user_info)
+                        NoteApp(self.root, self.client, self.user_info)
                 else:
                     break
             except ConnectionAbortedError:
