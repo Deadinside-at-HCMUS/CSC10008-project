@@ -71,6 +71,17 @@ class Client():
         self.side_image_label.image = photo
         self.side_image_label.place(x=5, y=100)
 
+        # Copyrights
+        self.text = '© Developed by'
+        self.intro = Label(self.lgn_frame, text=self.text, 
+                             font=('yu gothic ui', 13, 'bold'), bg=WHITE, fg=LIGHT_GRAY)
+        self.intro.place(x=130, y=550)        
+        self.intro_button = Button(self.lgn_frame, text="1st Team",
+                                    font=("yu gothic ui", 13, "bold"), fg=LIGHT_GRAY, relief=FLAT, highlightthickness=0,
+                                    activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2", command=self.introduction)
+        self.intro_button.place(x=287, y=547.5, width=100, height=30)  
+
+
         # Sign in image
         self.sign_in_image = Image.open('./images/signin.png')
         photo = ImageTk.PhotoImage(self.sign_in_image)
@@ -140,7 +151,7 @@ class Client():
         # Forgot password
         self.forgot_button = Button(self.lgn_frame, text="Forgot Password?",
                                     font=("yu gothic ui", 13, "bold underline"), fg=BLUE, relief=FLAT, highlightthickness=0,
-                                    activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
+                                    activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2", command=self.forgot_password)
         self.forgot_button.place(x=610, y=510)        
 
         # Sign up
@@ -169,7 +180,112 @@ class Client():
                                   activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_button.place(x=860, y=420)
         self.password_entry.config(show='*')
-    
+
+    def introduction(self):
+        self.win = Toplevel()
+        window_width = 550
+        window_height = 550
+        screen_width = self.win.winfo_screenwidth()
+        screen_height = self.win.winfo_screenheight()
+        position_top = int(screen_height / 4 - window_height / 4)
+        position_right = int(screen_width / 2 - window_width / 2)
+        self.win.geometry(
+            f'{window_width}x{window_height}+{position_right}+{position_top}')
+        self.win.title('Introduction')
+        icon = ImageTk.PhotoImage(file='./images/cat.ico')
+        self.root.iconphoto(False, icon)
+        self.win.configure(background='#f8f8f8')
+        self.win.resizable(0, 0)
+
+        self.team_frame = Frame(self.win, bg=WHITE, width=550, height=550)
+        self.team_frame.place(x=0, y=0)
+
+        self.image = Image.open('./images/team.jpg')
+        photo = ImageTk.PhotoImage(self.image)
+        self.image_label = Label(self.team_frame, image=photo, bg=WHITE)
+        self.image_label.image = photo
+        self.image_label.place(x=25, y=20)
+
+        member1_txt = "。Nguyen Hi Huu - It's great to become wibu"
+        self.member1_label = Label(self.team_frame, text=member1_txt, bg=WHITE, fg=DARK_GRAY, 
+                                    font=('yu gothic ui', 13, 'bold'))
+        self.member1_label.place(x=50, y=420)
+
+        member2_txt = "。Huynh Duc Thien - I'm the lucky guy"
+        self.member2_label = Label(self.team_frame, text=member2_txt, bg=WHITE, fg=DARK_GRAY, 
+                                    font=('yu gothic ui', 13, 'bold'))
+        self.member2_label.place(x=50, y=450)
+        
+        member3_txt = "。Le Anh Thu - Most of the time I chill'n"
+        self.member3_label = Label(self.team_frame, text=member3_txt, bg=WHITE, fg=DARK_GRAY, 
+                                    font=('yu gothic ui', 13, 'bold'))
+        self.member3_label.place(x=50, y=480)
+
+
+    def forgot_password(self):
+        self.win = Toplevel()
+        window_width = 350
+        window_height = 350
+        screen_width = self.win.winfo_screenwidth()
+        screen_height = self.win.winfo_screenheight()
+        position_top = int(screen_height / 4 - window_height / 4)
+        position_right = int(screen_width / 2 - window_width / 2)
+        self.win.geometry(
+            f'{window_width}x{window_height}+{position_right}+{position_top}')
+        self.win.title('Forgot Password')
+        icon = ImageTk.PhotoImage(file='./images/cat.ico')
+        self.root.iconphoto(False, icon)
+        self.win.configure(background='#f8f8f8')
+        self.win.resizable(0, 0)
+
+        # ====== Username ====================
+        self.exist_username_entry = Entry(self.win, fg=DARK_GRAY, font=(
+            "yu gothic ui", 12, "bold"), highlightthickness=2)
+        self.exist_username_entry.place(x=40, y=50, width=256, height=34)
+        self.exist_username_entry.config(highlightbackground=DARK_GRAY,
+                               highlightcolor=DARK_GRAY)
+        self.user_label = Label(self.win, text='Username', fg="#89898b", bg='#f8f8f8',
+                                font=("yu gothic ui", 11, 'bold'))
+        self.user_label.place(x=40, y=20)
+
+        # ====  New Password ==================
+        self.new_password_entry = Entry(self.win, fg=DARK_GRAY, font=(
+            "yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
+        self.new_password_entry.place(x=40, y=130, width=256, height=34)
+        self.new_password_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
+        self.new_password_label = Label(self.win, text='New Password', fg="#89898b",
+                                        bg='#f8f8f8', font=("yu gothic ui", 11, 'bold'))
+        self.new_password_label.place(x=40, y=100)
+
+        # ====  Confirm Password ==================
+        self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=(
+            "yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
+        self.confirm_password_entry.place(x=40, y=210, width=256, height=34)
+        self.confirm_password_entry.config(
+            highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
+        self.confirm_password_label = Label(self.win, text='Confirm Password', fg="#89898b", bg='#f8f8f8',
+                                            font=("yu gothic ui", 11, 'bold'))
+        self.confirm_password_label.place(x=40, y=180)
+
+        # ======= Update password Button ============
+        self.update_pass = Button(self.win, fg='#f8f8f8', text='Update Password', bg='#1b87d2', font=("yu gothic ui", 14, "bold"),
+                                  cursor='hand2', activebackground='#1b87d2', command=self.forgot_password_action)
+        self.update_pass.place(x=40, y=270, width=256, height=50)
+
+    def forgot_password_action(self):
+        username = self.exist_username_entry.get()
+        password = self.new_password_entry.get()
+        new_password = self.confirm_password_entry.get()
+
+        self.user_info = str(["FORGOT-PASSWORD", username, password, new_password])
+        self.client.send(self.user_info.encode(FORMAT))
+
+        # Receive response
+        response = self.client.recv(2048).decode(FORMAT)
+        messagebox.showinfo(None, response)
+        if response == "Update password successfully!":
+            self.win.destroy()
+
     def login_action(self):
         while self.running:
             try:

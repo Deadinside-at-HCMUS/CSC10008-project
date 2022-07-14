@@ -12,7 +12,7 @@ LIGHT_GRAY = '#bdb9b1'
 DARK_GRAY = '#4f4e4d'
 
 FORMAT = 'utf-8'
-BUFFER_SIZE = 2048
+BUFFER_SIZE = 10000
 
 class SignUp():
     def __init__(self, root, client):
@@ -188,16 +188,13 @@ class SignUp():
         self.password = self.password_entry.get()
         self.confirm_pw = self.confirm_password_entry.get()
 
-        self.user_info = str(
-            ["SIGN-UP", self.username, self.password, self.confirm_pw])
-        print("Signup successful")
+        self.user_info = str(["SIGN-UP", self.username, self.password, self.confirm_pw])
         self.client.send(self.user_info.encode(FORMAT))
-        # Receive response
-        self.response = self.client.recv(BUFFER_SIZE)
-        self.response = self.response.decode(FORMAT)
+
+        self.response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
 
         messagebox.showinfo(None, self.response)
-        if self.response == "Register successfully":
+        if self.response == "Register successfully!":
             self.root.destroy()
     
     def login(self):

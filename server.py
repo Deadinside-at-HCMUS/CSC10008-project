@@ -126,7 +126,6 @@ def addFile(username, files, fileID):
 def deleteNote(username, index, type):
     file = open("./note.json")
     user_note = json.load(file)
-    # Check type of note
     if type == "Text":
         for note in user_note[username]["note"]:
             if note["id"] == index:
@@ -239,7 +238,38 @@ def handle(client):
                 with open("./user.json", "w") as fo:
                     fo.write(object)
                 file.close()
-            
+
+            # Forgot password action            
+            elif mode == "FORGOT-PASSWORD":
+                file = open("user.json")
+                users_data = json.load(file)
+                user_exist = False
+                username = user_data[1]
+                password = user_data[2]
+                confirm_pw = user_data[3]
+                for user in users_data:
+                    if user["username"] == username:
+                        user_exist = True
+                        if checkValid(username, password):
+                            if user["password"] == password:
+                                client.send("Please use the new one, this is your current password!".encode(FORMAT))
+                                break
+                            elif password == confirm_pw:
+                                client.send("Update password successfully!".encode(FORMAT))
+                                user["password"] = password
+                                break
+                            else:
+                                client.send("Passwords are not matched!".encode(FORMAT))
+                                break
+                        else:
+                            client.send("Invalid username or password!".encode(FORMAT))
+                if not user_exist:
+                    client.send("User does not exist!".encode(FORMAT))
+                json_obj = json.dumps(users_data, indent=4)
+                with open("user.json", "w") as fo:
+                    fo.write(json_obj)
+                file.close()
+
             # Add note action
             elif mode == "ADD-NOTE":
                 name = user_data[1]

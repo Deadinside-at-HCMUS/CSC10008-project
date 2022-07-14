@@ -202,20 +202,17 @@ class NoteApp():
             response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
             if response == "Note successfully created!":
                 if self.gui_done:
-                    self.tree.insert(
-                        '', 'end', values=(self.countID, "Text", f"[Topic: {self.note_topic}] : {self.note if len(self.note) < 20 else self.note[0:20:1] + '...'}"))
+                    self.tree.insert('', 'end', values=(self.countID, "Text", f"[Topic: {self.note_topic}] : {self.note if len(self.note) < 20 else self.note[0:20:1] + '...'}"))
                     self.countID += 1
                     self.input_area.delete('1.0', 'end')
                     messagebox.showinfo(None, response)
                     self.win.destroy()
                     break
-            elif response == "This title is already exist":
-                messagebox.showwarning(
-                    title="Warning!", message="This title is already exist")
+            elif response == "This title is already exist!":
+                messagebox.showwarning(title="Warning!", message="This title is already exist!")
                 break
             else:
-                messagebox.showwarning(
-                    title="Warning!", message="You must enter a note!")
+                messagebox.showwarning(title="Warning!", message="You must enter a note!")
                 break
 
     def delete(self):
@@ -223,12 +220,10 @@ class NoteApp():
             self.task_index = self.tree.selection()[0]
             self.id = self.tree.item(self.task_index)['values'][0]
             self.type = self.tree.item(self.task_index)['values'][1]
-            self.client.send(
-                str(["DELETE-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
+            self.client.send(str(["DELETE-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             self.tree.delete(self.task_index)
         except:
-            messagebox.showwarning(
-                title="Warning!", message="You must select a note!")
+            messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def upload_image(self):
         img_path = askopenfilename(title='Select Image',
@@ -249,18 +244,15 @@ class NoteApp():
                     self.client.send(f.read())
                     f.close()
                 if self.gui_done:
-                    self.tree.insert('', 'end', values=(
-                        self.countID, "Image", f"[Name]: {self.image}"))
+                    self.tree.insert('', 'end', values=(self.countID, "Image", f"[Name]: {self.image}"))
                     self.countID += 1
                     messagebox.showinfo(None, response)
                     break
-            elif response == "This title is already exist":
-                messagebox.showwarning(
-                    title="Warning!", message="This title is already exist")
+            elif response == "This title is already exist!":
+                messagebox.showwarning(title="Warning!", message="This title is already exist!")
                 break
             else:
-                messagebox.showwarning(
-                    title="Warning!", message="You must enter a image!")
+                messagebox.showwarning(title="Warning!", message="You must enter a image!")
                 break
 
     def view(self):
@@ -345,8 +337,7 @@ class NoteApp():
                     f.write(data)
                     f.close()
         except:
-            messagebox.showwarning(
-                title="Warning!", message="You must enter a file!")
+            messagebox.showwarning(title="Warning!", message="You must enter a file!")
 
     def add_file(self):
         file_path = askopenfilename(title='Select File',
@@ -358,8 +349,7 @@ class NoteApp():
         self.file = file_path.split('/')
         self.file = self.file[len(self.file) - 1]
         while self.running:
-            self.user_file = str(
-                ["ADD-FILE", self.user_info[1], self.file, self.countID])
+            self.user_file = str(["ADD-FILE", self.user_info[1], self.file, self.countID])
             self.client.send(self.user_file.encode(FORMAT))
             response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
             if response == "File successfully created!":
@@ -367,16 +357,13 @@ class NoteApp():
                     self.client.send(f.read())
                     f.close()
                 if self.gui_done:
-                    self.tree.insert('', 'end', values=(
-                        self.countID, "File", f"[Name]: {self.file}"))
+                    self.tree.insert('', 'end', values=(self.countID, "File", f"[Name]: {self.file}"))
                     self.countID += 1
                     messagebox.showinfo(None, response)
                     break
-            elif response == "This title is already exist":
-                messagebox.showwarning(
-                    title="Warning!", message="This title is already exist")
+            elif response == "This title is already exist!":
+                messagebox.showwarning(title="Warning!", message="This title is already exist!")
                 break
             else:
-                messagebox.showwarning(
-                    title="Warning!", message="You must enter a file!")
+                messagebox.showwarning(title="Warning!", message="You must enter a file!")
                 break
