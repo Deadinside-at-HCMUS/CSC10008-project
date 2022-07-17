@@ -21,7 +21,7 @@ class SignUp():
         self.client = client
         
         # Rename window title
-        self.root.title('Sign Up Page')
+        self.root.title('Sign Up')
 
         # Changing window icon
         icon = ImageTk.PhotoImage(file='./images/cat.ico')
