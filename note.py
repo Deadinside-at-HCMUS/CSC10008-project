@@ -55,7 +55,7 @@ class NoteApp():
         self.root.resizable(isResize, isResize)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('./images/background.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.root, image=photo)
         self.bg_panel.image = photo
@@ -118,7 +118,7 @@ class NoteApp():
         self.user.place(x=620, y=50)
 
         # Left side image
-        self.side_image = Image.open('./images/takenote.jpg')
+        self.side_image = Image.open('./images/cat_note.jpg')
         leftPhoto = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.note_frame, image=leftPhoto, bg=WHITE)
         self.side_image_label.image = leftPhoto
@@ -130,31 +130,31 @@ class NoteApp():
 
         self.heading = Label(self.frame2, text='Add', fg=BLUE,
                              bg=WHITE, font=('yu gothic ui', 20, 'bold'))
-        self.heading.place(x=0, y=35, width=60, height=30)
+        self.heading.place(x=0, y=35.5, width=60, height=30)
 
-        self.add_txt_btn = Button(self.frame2, width=5, pady=8, text='Text', font=('yu gothic ui', 13, 'bold'),
+        self.add_txt_btn = Button(self.frame2, width=6, pady=8, text='Text', font=('yu gothic ui', 13, 'bold'),
                                 cursor="hand2", bg=BLUE, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.add_text)
-        self.add_txt_btn.place(x=80, y=30)
+        self.add_txt_btn.place(x=73, y=30)
 
-        self.add_files_btn = Button(self.frame2, width=5, pady=8, text='File', font=('yu gothic ui', 13, 'bold'),
+        self.add_files_btn = Button(self.frame2, width=6, pady=8, text='File', font=('yu gothic ui', 13, 'bold'),
                                     cursor="hand2", bg=BLUE, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.add_file)
-        self.add_files_btn.place(x=188, y=30)
+        self.add_files_btn.place(x=181, y=30)
 
-        self.upload_img_btn = Button(self.frame2, width=5, pady=8, text='Image', font=('yu gothic ui', 13, 'bold'),
+        self.upload_img_btn = Button(self.frame2, width=6, pady=8, text='Image', font=('yu gothic ui', 13, 'bold'),
                                      cursor="hand2", bg=BLUE, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.upload_image)
-        self.upload_img_btn.place(x=295, y=30)
+        self.upload_img_btn.place(x=288, y=30)
 
-        self.download_btn = Button(self.frame2, width=7, pady=8, text='Download', font=('yu gothic ui', 13, 'bold'),
+        self.download_btn = Button(self.frame2, width=8, pady=8, text='Download', font=('yu gothic ui', 13, 'bold'),
                                    cursor="hand2", bg=DARK_GRAY, fg=WHITE, border=0, command=self.download)
         self.download_btn.place(x=0, y=110)
 
-        self.view_btn = Button(self.frame2, width=7, pady=8, text='View', font=('yu gothic ui', 13, 'bold'),
+        self.view_btn = Button(self.frame2, width=8, pady=8, text='View', font=('yu gothic ui', 13, 'bold'),
                                cursor="hand2", bg=PINK, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.view)
-        self.view_btn.place(x=135, y=110)
+        self.view_btn.place(x=133, y=110)
 
-        self.delete_btn = Button(self.frame2, width=7, pady=8, text='Delete', font=('yu gothic ui', 13, 'bold'),
+        self.delete_btn = Button(self.frame2, width=8, pady=8, text='Delete', font=('yu gothic ui', 13, 'bold'),
                                  cursor="hand2", bg=RED, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.delete)
-        self.delete_btn.place(x=270, y=110)
+        self.delete_btn.place(x=266, y=110)
 
         #==================#
         self.gui_done = True

@@ -35,7 +35,7 @@ class SignUp():
         self.root.resizable(isResize, isResize)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('./images/background.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.root, image=photo)
         self.bg_panel.image = photo
@@ -50,14 +50,14 @@ class SignUp():
         self.heading.place(x=80, y=60, width=400, height=30)
 
         # Left side image
-        self.side_image = Image.open('./images/computervec.png')
+        self.side_image = Image.open('./images/computer.png')
         photo = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.signup_frame, image=photo, bg=WHITE)
         self.side_image_label.image = photo
         self.side_image_label.place(x=5, y=100)
 
         # Sign up image
-        self.sign_up_image = Image.open('./images/emptyuser.png')
+        self.sign_up_image = Image.open('./images/new_user.png')
         photo = ImageTk.PhotoImage(self.sign_up_image)
         self.sign_up_image_label = Label(self.signup_frame, image=photo, bg=WHITE)
         self.sign_up_image_label.image = photo
@@ -84,7 +84,7 @@ class SignUp():
         self.username_icon_label.place(x=550, y=292)
 
         # Signup button
-        self.signup_button = Image.open('./images/btn1.png')
+        self.signup_button = Image.open('./images/button.png')
         photo = ImageTk.PhotoImage(self.signup_button)
         self.signup_button_label = Label(self.signup_frame, image=photo, bg=WHITE)
         self.signup_button_label.image = photo

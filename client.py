@@ -49,7 +49,7 @@ class Client():
         self.root.resizable(isResize, isResize)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('./images/background.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.root, image=photo)
         self.bg_panel.image = photo
@@ -82,7 +82,7 @@ class Client():
         self.intro_button.place(x=287, y=547.5, width=100, height=30)  
 
         # Sign in image
-        self.sign_in_image = Image.open('./images/signin.png')
+        self.sign_in_image = Image.open('./images/cat_user.png')
         photo = ImageTk.PhotoImage(self.sign_in_image)
         self.sign_in_image_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.sign_in_image_label.image = photo
@@ -112,7 +112,7 @@ class Client():
         self.username_icon_label.place(x=550, y=332)
 
         # Login button
-        self.lgn_button = Image.open('./images/btn1.png')
+        self.lgn_button = Image.open('./images/button.png')
         photo = ImageTk.PhotoImage(self.lgn_button)
         self.lgn_button_label = Label(self.lgn_frame, image=photo, bg=WHITE)
         self.lgn_button_label.image = photo
@@ -199,7 +199,7 @@ class Client():
         self.team_frame.place(x=0, y=0)
 
         # Background image
-        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        self.bg_frame = Image.open('./images/background.jpg')
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.team_frame, image=photo)
         self.bg_panel.image = photo
