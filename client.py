@@ -81,7 +81,6 @@ class Client():
                                     activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2", command=self.introduction)
         self.intro_button.place(x=287, y=547.5, width=100, height=30)  
 
-
         # Sign in image
         self.sign_in_image = Image.open('./images/signin.png')
         photo = ImageTk.PhotoImage(self.sign_in_image)
@@ -189,16 +188,23 @@ class Client():
         screen_height = self.win.winfo_screenheight()
         position_top = int(screen_height / 4 - window_height / 4)
         position_right = int(screen_width / 2 - window_width / 2)
-        self.win.geometry(
-            f'{window_width}x{window_height}+{position_right}+{position_top}')
-        self.win.title('Introduction')
+        self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        
+        self.win.title('About us')
         icon = ImageTk.PhotoImage(file='./images/cat.ico')
         self.root.iconphoto(False, icon)
-        self.win.configure(background='#f8f8f8')
+        self.win.configure(background=WHITE)
         self.win.resizable(0, 0)
 
         self.team_frame = Frame(self.win, bg=WHITE, width=550, height=550)
         self.team_frame.place(x=0, y=0)
+
+        # Background image
+        self.bg_frame = Image.open('./images/backgroundB.jpg')
+        photo = ImageTk.PhotoImage(self.bg_frame)
+        self.bg_panel = Label(self.team_frame, image=photo)
+        self.bg_panel.image = photo
+        self.bg_panel.grid(row=1)
 
         self.image = Image.open('./images/team.jpg')
         photo = ImageTk.PhotoImage(self.image)
@@ -230,47 +236,46 @@ class Client():
         screen_height = self.win.winfo_screenheight()
         position_top = int(screen_height / 4 - window_height / 4)
         position_right = int(screen_width / 2 - window_width / 2)
-        self.win.geometry(
-            f'{window_width}x{window_height}+{position_right}+{position_top}')
+        self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+
         self.win.title('Forgot Password')
         icon = ImageTk.PhotoImage(file='./images/cat.ico')
         self.root.iconphoto(False, icon)
-        self.win.configure(background='#f8f8f8')
+        self.win.configure(background=WHITE)
         self.win.resizable(0, 0)
 
-        # ====== Username ====================
-        self.exist_username_entry = Entry(self.win, fg=DARK_GRAY, font=(
-            "yu gothic ui", 12, "bold"), highlightthickness=2)
-        self.exist_username_entry.place(x=40, y=50, width=256, height=34)
-        self.exist_username_entry.config(highlightbackground=DARK_GRAY,
-                               highlightcolor=DARK_GRAY)
-        self.user_label = Label(self.win, text='Username', fg="#89898b", bg='#f8f8f8',
-                                font=("yu gothic ui", 11, 'bold'))
-        self.user_label.place(x=40, y=20)
+        self.title = Label(self.win, text="Don't worry!", fg=BLUE, bg=WHITE,font=("yu gothic ui", 16, 'bold'))
+        self.title.place(x=100, y=10)
 
-        # ====  New Password ==================
+        # Username 
+        self.user_label = Label(self.win, text='Username', fg=DARK_GRAY, bg=WHITE,font=("yu gothic ui", 12, 'bold'))
+        self.user_label.place(x=20, y=45)
+        self.exist_username_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), highlightthickness=2)
+        self.exist_username_entry.place(x=20, y=75, width=300, height=34)
+        self.exist_username_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
+
+        # New Password
+        self.new_password_label = Label(self.win, text='New Password', fg=DARK_GRAY,
+                                        bg=WHITE, font=("yu gothic ui", 12, 'bold'))
+        self.new_password_label.place(x=20, y=125)
         self.new_password_entry = Entry(self.win, fg=DARK_GRAY, font=(
-            "yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
-        self.new_password_entry.place(x=40, y=130, width=256, height=34)
+            "yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
+        self.new_password_entry.place(x=20, y=155, width=300, height=34)
         self.new_password_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
-        self.new_password_label = Label(self.win, text='New Password', fg="#89898b",
-                                        bg='#f8f8f8', font=("yu gothic ui", 11, 'bold'))
-        self.new_password_label.place(x=40, y=100)
 
-        # ====  Confirm Password ==================
-        self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=(
-            "yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
-        self.confirm_password_entry.place(x=40, y=210, width=256, height=34)
+        # Confirm Password
+        self.confirm_password_label = Label(self.win, text='Confirm Password', fg=DARK_GRAY, bg=WHITE,
+                                            font=("yu gothic ui", 12, 'bold'))
+        self.confirm_password_label.place(x=20, y=205)
+        self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
+        self.confirm_password_entry.place(x=20, y=235, width=300, height=34)
         self.confirm_password_entry.config(
             highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
-        self.confirm_password_label = Label(self.win, text='Confirm Password', fg="#89898b", bg='#f8f8f8',
-                                            font=("yu gothic ui", 11, 'bold'))
-        self.confirm_password_label.place(x=40, y=180)
 
-        # ======= Update password Button ============
-        self.update_pass = Button(self.win, fg='#f8f8f8', text='Update Password', bg='#1b87d2', font=("yu gothic ui", 14, "bold"),
-                                  cursor='hand2', activebackground='#1b87d2', command=self.forgot_password_action)
-        self.update_pass.place(x=40, y=270, width=256, height=50)
+        # Update password Button
+        self.update_pass = Button(self.win, fg=WHITE, text='Update Password', bg=BLUE, font=("yu gothic ui", 13, "bold"),
+                                  cursor='hand2', activebackground=BLUE, command=self.forgot_password_action)
+        self.update_pass.place(x=75, y=285, width=200, height=50)
 
     def forgot_password_action(self):
         username = self.exist_username_entry.get()

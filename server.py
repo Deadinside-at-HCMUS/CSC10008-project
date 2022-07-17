@@ -21,7 +21,7 @@ except socket.error as e:
 
 # Listening for connections
 server.listen()
-print("========== SEVER RUNNING ==========")
+print("============ SEVER RUNNING ============")
 print(f"Server {IP} listening on port {PORT}")
 print("Waiting for clients...")
 
@@ -54,14 +54,14 @@ def initNote(username):
         "image": [],
         "file": []
     }
-    object = json.dumps(user_note, indent=4)
+    json_object = json.dumps(user_note, indent=4)
     with open("./note.json", "w") as fileOut:
-        fileOut.write(object)
+        fileOut.write(json_object)
     file.close()
 
 def createUserFolder(filename):
-    isFile = os.path.isdir('./user_data')
-    if isFile:
+    is_file = os.path.isdir('./user_data')
+    if is_file:
         path = f'./user_data/{filename}'
         os.makedirs(path)
     else:
@@ -96,31 +96,31 @@ def isExistFile(username, files):
             return True
     return False
 
-def addNote(username, title, content, noteID):
+def addNote(username, title, content, note_id):
     file = open("./note.json")
     user_note = json.load(file)
-    user_note[username]["note"].append({"id": noteID, "title": title, "content": content})
-    object = json.dumps(user_note, indent=4)
+    user_note[username]["note"].append({"id": note_id, "title": title, "content": content})
+    json_object = json.dumps(user_note, indent=4)
     with open("./note.json", "w") as fileOut:
-        fileOut.write(object)
+        fileOut.write(json_object)
     file.close()
 
 def addImage(username, image, imageID):
     file = open("./note.json")
     user_image = json.load(file)
     user_image[username]["image"].append({"id": imageID, "name": image})
-    object = json.dumps(user_image, indent=4)
+    json_object = json.dumps(user_image, indent=4)
     with open("./note.json", "w") as fileOut:
-        fileOut.write(object)
+        fileOut.write(json_object)
     file.close()
 
 def addFile(username, files, fileID):
     file = open("./note.json")
     users_file = json.load(file)
     users_file[username]["file"].append({"id": fileID, "name": files})
-    object = json.dumps(users_file, indent=4)
+    json_object = json.dumps(users_file, indent=4)
     with open("./note.json", "w") as fileOut:
-        fileOut.write(object)
+        fileOut.write(json_object)
     file.close()
 
 def deleteNote(username, index, type):
@@ -143,9 +143,9 @@ def deleteNote(username, index, type):
                 os.remove(f"./user_data/{username}/{file['name']}")
                 user_note[username]["file"].remove(file)
                 break
-    object = json.dumps(user_note, indent=4)
+    json_object = json.dumps(user_note, indent=4)
     with open("./note.json", "w") as fileOut:
-        fileOut.write(object)
+        fileOut.write(json_object)
     file.close()
 
 def loadUserNoteData(username, client):
@@ -193,9 +193,9 @@ def handle(client):
                         if user["username"] == username:
                             if user["password"] == password:
                                 users.append([username, password])
-                                object = json.dumps(users_data, indent=4)
+                                json_object = json.dumps(users_data, indent=4)
                                 with open("user.json", "w") as fo:
-                                    fo.write(object)
+                                    fo.write(json_object)
                                 client.send("Login successful!".encode(FORMAT))
                                 loadUserNoteData(username, client)
                             else:
@@ -215,7 +215,7 @@ def handle(client):
                 user_exist = False
                 username = user_data[1]
                 password = user_data[2]
-                confirm_pw = user_data[3]
+                confirm_password = user_data[3]
                 if checkValid(username, password):
                     user_exist = False
                     for user in users_data:
@@ -224,7 +224,7 @@ def handle(client):
                             user_exist = True
                             break
                     if not(user_exist):
-                        if confirm_pw == password:
+                        if confirm_password == password:
                             user_info = {"username": username, "password": password}
                             initNote(username)
                             createUserFolder(username)
@@ -234,19 +234,19 @@ def handle(client):
                             client.send("Password is not matched!".encode(FORMAT))
                 else:
                     client.send("Invalid username or password!".encode(FORMAT))
-                object = json.dumps(users_data, indent=4)
+                json_object = json.dumps(users_data, indent=4)
                 with open("./user.json", "w") as fo:
-                    fo.write(object)
+                    fo.write(json_object)
                 file.close()
 
             # Forgot password action            
             elif mode == "FORGOT-PASSWORD":
-                file = open("user.json")
+                file = open("./user.json")
                 users_data = json.load(file)
                 user_exist = False
                 username = user_data[1]
                 password = user_data[2]
-                confirm_pw = user_data[3]
+                confirm_password = user_data[3]
                 for user in users_data:
                     if user["username"] == username:
                         user_exist = True
@@ -254,7 +254,7 @@ def handle(client):
                             if user["password"] == password:
                                 client.send("Please use the new one, this is your current password!".encode(FORMAT))
                                 break
-                            elif password == confirm_pw:
+                            elif password == confirm_password:
                                 client.send("Update password successfully!".encode(FORMAT))
                                 user["password"] = password
                                 break
@@ -265,9 +265,9 @@ def handle(client):
                             client.send("Invalid username or password!".encode(FORMAT))
                 if not user_exist:
                     client.send("User does not exist!".encode(FORMAT))
-                json_obj = json.dumps(users_data, indent=4)
-                with open("user.json", "w") as fo:
-                    fo.write(json_obj)
+                json_object = json.dumps(users_data, indent=4)
+                with open("./user.json", "w") as fo:
+                    fo.write(json_object)
                 file.close()
 
             # Add note action
@@ -275,12 +275,12 @@ def handle(client):
                 name = user_data[1]
                 note_topic = user_data[2]
                 note = user_data[3]
-                noteID = user_data[4]
+                note_id = user_data[4]
                 if len(note_topic) > 0 and len(note) > 0:
                     note_exist = isExistNote(name, note_topic)
                     if not note_exist:
                         client.send("Note successfully created!".encode(FORMAT))
-                        addNote(name, note_topic, note, noteID)
+                        addNote(name, note_topic, note, note_id)
                     else:
                         client.send("This title is already exist!".encode(FORMAT))
                 else:
@@ -325,12 +325,12 @@ def handle(client):
             elif mode == "ADD-IMAGE":
                 name = user_data[1]
                 image = user_data[2]
-                IDimage = user_data[3]
+                image_id = user_data[3]
                 if len(image) > 0:
                     image_exist = isExistImage(name, image)
                     if not image_exist:
                         client.send("Image successfully created!".encode(FORMAT))
-                        addImage(name, image, IDimage)
+                        addImage(name, image, image_id)
                         with open(f'./user_data/{name}/' + image, 'wb') as f:
                             data = client.recv(BUFFER_SIZE)
                             f.write(data)
@@ -341,27 +341,27 @@ def handle(client):
             # View note action
             elif mode == "VIEW-NOTE":
                 username = user_data[1]
-                noteID = user_data[2]
+                note_id = user_data[2]
                 type = user_data[3]
                 file = open("./note.json")
                 user_note = json.load(file)
                 if type == "Image":
                     for user in user_note[username]["image"]:
-                        if user["id"] == noteID:
+                        if user["id"] == note_id:
                             with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
                                 client.send(f.read())
                                 f.close()
                             break
                 elif type == "File":
                     for user in user_note[username]["file"]:
-                        if user["id"] == noteID:
+                        if user["id"] == note_id:
                             with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
                                 client.send(f.read().encode(FORMAT))
                                 f.close()
                             break
                 elif type == "Text":
                     for user in user_note[username]["note"]:
-                        if user["id"] == noteID:
+                        if user["id"] == note_id:
                             client.send(
                                 str([user["title"], user["content"]]).encode(FORMAT))
                             break
@@ -370,12 +370,12 @@ def handle(client):
             elif mode == "ADD-FILE":
                 name = user_data[1]
                 file = user_data[2]
-                IDfile = user_data[3]
+                file_id = user_data[3]
                 if len(file) > 0:
                     file_exist = isExistFile(name, file)
                     if not file_exist:
                         client.send("File successfully created!".encode(FORMAT))
-                        addFile(name, file, IDfile)
+                        addFile(name, file, file_id)
                         with open(f'./user_data/{name}/' + file, 'wb') as f:
                             data = client.recv(BUFFER_SIZE)
                             f.write(data)
@@ -390,18 +390,18 @@ def handle(client):
                 client.close()
 
 def receive():
-    ThreadCount = 0
+    thread_count = 0
     while True:
         client, address = server.accept()
 
-        print(f"~~CONNECTED~~")
+        print("~~CONNECTED~~")
         print("Client:", client.getsockname())
 
         clients.append(client)
         client_handler = threading.Thread(target=handle, args=(client,))
         client_handler.start()
-        ThreadCount += 1
-        print("Connection Request: " + str(ThreadCount))
+        thread_count += 1
+        print("Connection Request: " + str(thread_count))
 
 if __name__ == "__main__":
     receive()

@@ -117,11 +117,11 @@ class NoteApp():
                           bg=WHITE, font=('yu gothic ui', 16, 'bold'))
         self.user.place(x=620, y=50)
         # Left side image
-        self.side_image = Image.open('./images/takenote.png')
+        self.side_image = Image.open('./images/takenote.jpg')
         leftPhoto = ImageTk.PhotoImage(self.side_image)
         self.side_image_label = Label(self.note_frame, image=leftPhoto, bg=WHITE)
         self.side_image_label.image = leftPhoto
-        self.side_image_label.place(x=160, y=380)
+        self.side_image_label.place(x=120, y=340)
         # ============= Buttons ====================#
         self.frame2 = Frame(self.root, width=400, height=250, bg=WHITE)
         self.frame2.place(x=550, y=450)
