@@ -3,6 +3,10 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk, Image
 
+# Constant
+FORMAT = 'utf-8'
+BUFFER_SIZE = 10000
+
 # Colors
 WHITE = '#ffffff'
 DARK = '#000000'
@@ -11,15 +15,14 @@ BLUE = '#3047ff'
 LIGHT_GRAY = '#bdb9b1'
 DARK_GRAY = '#4f4e4d'
 
-FORMAT = 'utf-8'
-BUFFER_SIZE = 10000
-
 class SignUp():
     def __init__(self, root, client):
         self.root = root
         self.client = client
+        
         # Rename window title
         self.root.title('Sign Up Page')
+
         # Changing window icon
         icon = ImageTk.PhotoImage(file='./images/cat.ico')
         self.root.iconphoto(False, icon)
@@ -43,8 +46,7 @@ class SignUp():
         self.signup_frame.place(x=110, y=60)
 
         self.txt = "Let's started!"
-        self.heading = Label(self.signup_frame, text=self.txt, 
-                             font=('yu gothic ui', 25, 'bold'), bg=WHITE, fg=BLUE)
+        self.heading = Label(self.signup_frame, text=self.txt, font=('yu gothic ui', 25, 'bold'), bg=WHITE, fg=BLUE)
         self.heading.place(x=80, y=60, width=400, height=30)
 
         # Left side image
@@ -61,17 +63,14 @@ class SignUp():
         self.sign_up_image_label.image = photo
         self.sign_up_image_label.place(x=650, y=90)
 
-        self.sign_up_label = Label(self.signup_frame, text='Sign Up', 
-                                   font=('yu gothic ui', 17, 'bold'), bg=WHITE, fg=BLUE)
+        self.sign_up_label = Label(self.signup_frame, text='Sign Up', font=('yu gothic ui', 17, 'bold'), bg=WHITE, fg=BLUE)
         self.sign_up_label.place(x=650, y=200)
 
         # Username
-        self.username_label = Label(self.signup_frame, text='Username', bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.username_label = Label(self.signup_frame, text='Username', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.username_label.place(x=550, y=260)
 
-        self.username_entry = Entry(self.signup_frame, highlightthickness=0, relief=FLAT, bg=WHITE, 
-                                    fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
+        self.username_entry = Entry(self.signup_frame, highlightthickness=0, relief=FLAT, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.username_entry.place(x=580, y=295, width=270)
 
         self.username_line = Canvas(self.signup_frame, width=300, height=2.0, highlightthickness=0, bg=LIGHT_GRAY)
@@ -91,21 +90,19 @@ class SignUp():
         self.signup_button_label.image = photo
         self.signup_button_label.place(x=550, y=500)
         Button(self.signup_button_label, text='SIGN UP', font=("yu gothic ui", 13, "bold"), width=20, bd=0,
-                            bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0, command=self.signup_action).place(x=20, y=10)
+                bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0, command=self.signup_action).place(x=20, y=10)
 
         # Login 
-        self.login_label = Label(self.signup_frame, text='I have an account!',
-                           fg=DARK_GRAY, bg=WHITE, font=('yu gothic ui', 12, "bold"))
+        self.login_label = Label(self.signup_frame, text='I have an account!', fg=DARK_GRAY, bg=WHITE, font=('yu gothic ui', 12, "bold"))
         self.login_label.place(x=570, y=570)
 
         self.login_img = ImageTk.PhotoImage(file='./images/login.png')
-        self.login = Button(self.signup_frame, image=self.login_img, bg=WHITE, cursor="hand2",
-                            borderwidth=0, background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.login)
+        self.login = Button(self.signup_frame, image=self.login_img, bg=WHITE, cursor="hand2", borderwidth=0, 
+                            background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.login)
         self.login.place(x=750, y=560, width=80, height=35)
 
         # Password
-        self.password_label = Label(self.signup_frame, text='Password', bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.password_label = Label(self.signup_frame, text='Password', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.password_label.place(x=550, y=340)
 
         self.password_entry = Entry(self.signup_frame, highlightthickness=0, relief=FLAT, bg=WHITE, 
@@ -116,12 +113,10 @@ class SignUp():
         self.password_line.place(x=550, y=400)
 
         # Confirm Password
-        self.confirm_password_label = Label(self.signup_frame, text='Confirm Password', bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.confirm_password_label = Label(self.signup_frame, text='Confirm Password', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.confirm_password_label.place(x=550, y=421)
 
-        self.confirm_password_entry = Entry(self.signup_frame, highlightthickness=0, relief=FLAT, bg=WHITE, 
-                                    fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'), show='*')
+        self.confirm_password_entry = Entry(self.signup_frame, highlightthickness=0, relief=FLAT, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'), show='*')
         self.confirm_password_entry.place(x=580, y=457, width=244)
 
         self.confirm_password_line = Canvas(self.signup_frame, width=300, height=2.0, highlightthickness=0, bg=LIGHT_GRAY)
@@ -152,10 +147,10 @@ class SignUp():
         self.show_confirm_image = ImageTk.PhotoImage(file='./images/show.png')
         self.hide_confirm_image = ImageTk.PhotoImage(file='./images/hide.png')
         self.show_confirm_button = Button(self.signup_frame, image=self.show_confirm_image, command=self.show_confirm_password, relief=FLAT,
-                                  activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
+                                            activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_confirm_button.place(x=860, y=461)
 
-        ###
+        #==================#
         self.gui_done = True
         self.root.mainloop()
 
@@ -173,13 +168,13 @@ class SignUp():
 
     def show_confirm_password(self):
         self.hide_confirm_button = Button(self.signup_frame, image=self.hide_confirm_image, command=self.hide_confirm_password, relief=FLAT,
-                                  activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
+                                        activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.hide_confirm_button.place(x=860, y=461)
         self.confirm_password_entry.config(show='')
 
     def hide_confirm_password(self):
         self.show_confirm_button = Button(self.signup_frame, image=self.show_confirm_image, command=self.show_confirm_password, relief=FLAT,
-                                  activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
+                                        activebackground=WHITE, borderwidth=0, background=WHITE, cursor="hand2")
         self.show_confirm_button.place(x=860, y=461)
         self.confirm_password_entry.config(show='*')
 

@@ -5,7 +5,7 @@ import re
 import os
 import json
 
-# Constants
+# Server set up
 IP = '127.0.0.1'
 PORT = 5005
 BUFFER_SIZE = 1000000

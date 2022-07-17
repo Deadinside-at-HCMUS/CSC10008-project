@@ -122,8 +122,7 @@ class Client():
         self.login.place(x=20, y=10)
 
         # Password
-        self.password_label = Label(self.lgn_frame, text='Password', bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.password_label = Label(self.lgn_frame, text='Password', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.password_label.place(x=550, y=380)
 
         self.password_entry = Entry(self.lgn_frame, highlightthickness=0, relief=FLAT, bg=WHITE, 
@@ -215,16 +214,13 @@ class Client():
 
         # Self introduction
         member1_txt = "。Nguyen Hi Huu - It's great to become wibu"
-        self.member1_label = Label(self.team_frame, text=member1_txt, bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.member1_label = Label(self.team_frame, text=member1_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.member1_label.place(x=50, y=420)
         member2_txt = "。Huynh Duc Thien - I'm the lucky guy"
-        self.member2_label = Label(self.team_frame, text=member2_txt, bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.member2_label = Label(self.team_frame, text=member2_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.member2_label.place(x=50, y=450)
         member3_txt = "。Le Anh Thu - Most of the time I chill'n"
-        self.member3_label = Label(self.team_frame, text=member3_txt, bg=WHITE, fg=DARK_GRAY, 
-                                    font=('yu gothic ui', 13, 'bold'))
+        self.member3_label = Label(self.team_frame, text=member3_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.member3_label.place(x=50, y=480)
 
     def forgot_password(self):
@@ -255,19 +251,16 @@ class Client():
         self.exist_username_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
         # New password
-        self.new_password_label = Label(self.win, text='New Password', fg=DARK_GRAY,
-                                        bg=WHITE, font=("yu gothic ui", 12, 'bold'))
+        self.new_password_label = Label(self.win, text='New Password', fg=DARK_GRAY, bg=WHITE, font=("yu gothic ui", 12, 'bold'))
         self.new_password_label.place(x=20, y=125)
-        self.new_password_entry = Entry(self.win, fg=DARK_GRAY, font=(
-            "yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
+        self.new_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
         self.new_password_entry.place(x=20, y=155, width=300, height=34)
         self.new_password_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
         # Confirm password
-        self.confirm_password_label = Label(self.win, text='Confirm Password', fg=DARK_GRAY, bg=WHITE,
-                                            font=("yu gothic ui", 12, 'bold'))
+        self.confirm_password_label = Label(self.win, text='Confirm Password', fg=DARK_GRAY, bg=WHITE, font=("yu gothic ui", 12, 'bold'))
         self.confirm_password_label.place(x=20, y=205)
-        self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='•', highlightthickness=2)
+        self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
         self.confirm_password_entry.place(x=20, y=235, width=300, height=34)
         self.confirm_password_entry.config(
             highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
