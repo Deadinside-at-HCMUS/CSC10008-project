@@ -198,13 +198,6 @@ class Client():
         self.team_frame = Frame(self.win, bg=WHITE, width=550, height=550)
         self.team_frame.place(x=0, y=0)
 
-        # Background image
-        self.bg_frame = Image.open('./images/background.jpg')
-        photo = ImageTk.PhotoImage(self.bg_frame)
-        self.bg_panel = Label(self.team_frame, image=photo)
-        self.bg_panel.image = photo
-        self.bg_panel.grid(row=1)
-
         # Team image
         self.image = Image.open('./images/team.jpg')
         photo = ImageTk.PhotoImage(self.image)
