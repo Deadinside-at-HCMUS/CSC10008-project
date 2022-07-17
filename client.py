@@ -21,10 +21,10 @@ LIGHT_GRAY = '#bdb9b1'
 DARK_GRAY = '#4f4e4d'
 
 class Client():
-    def __init__(self, host, port):
+    def __init__(self, ip, port):
         # Socket connection
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((host, port))
+        self.client.connect((ip, port))
 
         self.gui_done = False
         self.running = True
@@ -206,27 +206,26 @@ class Client():
         self.bg_panel.image = photo
         self.bg_panel.grid(row=1)
 
+        # Team image
         self.image = Image.open('./images/team.jpg')
         photo = ImageTk.PhotoImage(self.image)
         self.image_label = Label(self.team_frame, image=photo, bg=WHITE)
         self.image_label.image = photo
         self.image_label.place(x=25, y=20)
 
+        # Self introduction
         member1_txt = "。Nguyen Hi Huu - It's great to become wibu"
         self.member1_label = Label(self.team_frame, text=member1_txt, bg=WHITE, fg=DARK_GRAY, 
                                     font=('yu gothic ui', 13, 'bold'))
         self.member1_label.place(x=50, y=420)
-
         member2_txt = "。Huynh Duc Thien - I'm the lucky guy"
         self.member2_label = Label(self.team_frame, text=member2_txt, bg=WHITE, fg=DARK_GRAY, 
                                     font=('yu gothic ui', 13, 'bold'))
         self.member2_label.place(x=50, y=450)
-        
         member3_txt = "。Le Anh Thu - Most of the time I chill'n"
         self.member3_label = Label(self.team_frame, text=member3_txt, bg=WHITE, fg=DARK_GRAY, 
                                     font=('yu gothic ui', 13, 'bold'))
         self.member3_label.place(x=50, y=480)
-
 
     def forgot_password(self):
         self.win = Toplevel()
@@ -244,6 +243,7 @@ class Client():
         self.win.configure(background=WHITE)
         self.win.resizable(0, 0)
 
+        # Title
         self.title = Label(self.win, text="Don't worry!", fg=BLUE, bg=WHITE,font=("yu gothic ui", 16, 'bold'))
         self.title.place(x=100, y=10)
 
@@ -254,7 +254,7 @@ class Client():
         self.exist_username_entry.place(x=20, y=75, width=300, height=34)
         self.exist_username_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
-        # New Password
+        # New password
         self.new_password_label = Label(self.win, text='New Password', fg=DARK_GRAY,
                                         bg=WHITE, font=("yu gothic ui", 12, 'bold'))
         self.new_password_label.place(x=20, y=125)
@@ -263,7 +263,7 @@ class Client():
         self.new_password_entry.place(x=20, y=155, width=300, height=34)
         self.new_password_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
-        # Confirm Password
+        # Confirm password
         self.confirm_password_label = Label(self.win, text='Confirm Password', fg=DARK_GRAY, bg=WHITE,
                                             font=("yu gothic ui", 12, 'bold'))
         self.confirm_password_label.place(x=20, y=205)
@@ -272,7 +272,7 @@ class Client():
         self.confirm_password_entry.config(
             highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
-        # Update password Button
+        # Update password button
         self.update_pass = Button(self.win, fg=WHITE, text='Update Password', bg=BLUE, font=("yu gothic ui", 13, "bold"),
                                   cursor='hand2', activebackground=BLUE, command=self.forgot_password_action)
         self.update_pass.place(x=75, y=285, width=200, height=50)
