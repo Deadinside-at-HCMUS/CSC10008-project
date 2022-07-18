@@ -26,7 +26,7 @@ DARK_GRAY = '#4f4e4d'
 RED = '#d22b2b'
 PINK = '#ff647f'
 
-class NoteApp():
+class Note():
     def __init__(self, root, client, user_info):
         self.client = client
         self.running = True
@@ -96,14 +96,14 @@ class NoteApp():
         imgs = self.client_notes['image']
         self.id_count = 1
         for note in notes:
-            self.tree.insert('', 'end', values=(note['_id'], "Text", f"[Topic: {note['title']}] : {note['content'] if len(note['content']) < 20 else note['content'][0:20:1] + '...'}"))
-            self.id_count = max(self.id_count, int(note['_id'])) + 1
+            self.tree.insert('', 'end', values=(note['id'], "Text", f"[Topic: {note['title']}] : {note['content'] if len(note['content']) < 32 else note['content'][0:32:1] + '...'}"))
+            self.id_count = max(self.id_count, int(note['id'])) + 1
         for img in imgs:
-            self.tree.insert('', 'end', values=(img['_id'], "Image", f"[Name]: {img['name']}"))
-            self.id_count = max(self.id_count, int(img['_id'])) + 1
+            self.tree.insert('', 'end', values=(img['id'], "Image", f"[Name]: {img['name']}"))
+            self.id_count = max(self.id_count, int(img['id'])) + 1
         for file in files:
-            self.tree.insert('', 'end', values=(file['_id'], "File", f"[Name]: {file['name']}"))
-            self.id_count = max(self.id_count, int(file['_id'])) + 1
+            self.tree.insert('', 'end', values=(file['id'], "File", f"[Name]: {file['name']}"))
+            self.id_count = max(self.id_count, int(file['id'])) + 1
 
         self.frame1 = Frame(self.root, width=850, height=100, bg=WHITE)
         self.frame1.place(x=105, y=100)
@@ -187,7 +187,7 @@ class NoteApp():
         self.input_area.pack(padx=(80, 20), pady=3)
 
         self.send_btn = Button(self.win, text="Add note", command=self.add_note)
-        self.send_btn.config(font=("yu gothic ui", 14))
+        self.send_btn.config(font=("yu gothic ui", 14, "bold"), bg=BLUE, fg=WHITE)
         self.send_btn.pack(padx=50, pady=10)
 
     def add_note(self):

@@ -4,7 +4,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from signup import SignUp
-from note import NoteApp
+from note import Note
 
 # Client set up
 IP = '127.0.0.1'
@@ -36,7 +36,7 @@ class Client():
     def gui_loop(self):
         self.root = Tk()
         # Rename window title
-        self.root.title('Login Page')
+        self.root.title('Login')
         # Changing window icon
         icon = ImageTk.PhotoImage(file='./images/cat.ico')
         self.root.iconphoto(False, icon)
@@ -297,7 +297,7 @@ class Client():
 
                 if response == "Login successful!":
                     if self.gui_done:
-                        NoteApp(self.root, self.client, self.user_info)
+                        Note(self.root, self.client, self.user_info)
                 else:
                     break
             except ConnectionAbortedError:
