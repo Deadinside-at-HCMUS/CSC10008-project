@@ -164,7 +164,7 @@ class Note():
     def add_text(self):
         self.win = Toplevel()
         window_width = 500
-        window_height = 350
+        window_height = 362
         screen_width = self.win.winfo_screenwidth()
         screen_height = self.win.winfo_screenheight()
         position_top = int(screen_height / 4 - window_height / 4)
@@ -188,7 +188,7 @@ class Note():
 
         self.send_btn = Button(self.win, text="Add note", command=self.add_note)
         self.send_btn.config(font=("yu gothic ui", 14, "bold"), bg=BLUE, fg=WHITE)
-        self.send_btn.pack(padx=50, pady=10)
+        self.send_btn.pack(padx=40, pady=10)
 
     def add_note(self):
         while self.running:
