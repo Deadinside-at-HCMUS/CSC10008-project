@@ -39,7 +39,8 @@ class SignUp():
         photo = ImageTk.PhotoImage(self.bg_frame)
         self.bg_panel = Label(self.root, image=photo)
         self.bg_panel.image = photo
-        self.bg_panel.pack(fill='both', expand='yes')
+        self.bg_panel.grid(row=1)
+        # self.bg_panel.pack(fill='both', expand='yes')
 
         # Sign up frame
         self.signup_frame = Frame(self.root, bg=WHITE, width=950, height=600)
@@ -47,7 +48,7 @@ class SignUp():
 
         self.txt = "Let's started!"
         self.heading = Label(self.signup_frame, text=self.txt, font=('yu gothic ui', 25, 'bold'), bg=WHITE, fg=BLUE)
-        self.heading.place(x=80, y=60, width=400, height=30)
+        self.heading.place(x=60, y=60, width=400, height=30)
 
         # Left side image
         self.side_image = Image.open('./images/computer.png')
@@ -61,10 +62,10 @@ class SignUp():
         photo = ImageTk.PhotoImage(self.sign_up_image)
         self.sign_up_image_label = Label(self.signup_frame, image=photo, bg=WHITE)
         self.sign_up_image_label.image = photo
-        self.sign_up_image_label.place(x=650, y=90)
+        self.sign_up_image_label.place(x=645, y=90)
 
         self.sign_up_label = Label(self.signup_frame, text='Sign Up', font=('yu gothic ui', 17, 'bold'), bg=WHITE, fg=BLUE)
-        self.sign_up_label.place(x=650, y=200)
+        self.sign_up_label.place(x=655, y=200)
 
         # Username
         self.username_label = Label(self.signup_frame, text='Username', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
@@ -90,16 +91,16 @@ class SignUp():
         self.signup_button_label.image = photo
         self.signup_button_label.place(x=550, y=500)
         Button(self.signup_button_label, text='SIGN UP', font=("yu gothic ui", 13, "bold"), width=20, bd=0,
-                bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0, command=self.signup_action).place(x=20, y=10)
+                bg=BLUE, cursor='hand2', activebackground=BLUE, fg=WHITE, highlightthickness=0, command=self.signup_action).place(x=45, y=11)
 
         # Login 
         self.login_label = Label(self.signup_frame, text='I have an account!', fg=DARK_GRAY, bg=WHITE, font=('yu gothic ui', 12, "bold"))
-        self.login_label.place(x=570, y=570)
+        self.login_label.place(x=585, y=570)
 
         self.login_img = ImageTk.PhotoImage(file='./images/login.png')
         self.login = Button(self.signup_frame, image=self.login_img, bg=WHITE, cursor="hand2", borderwidth=0, 
                             background=WHITE, activebackground=WHITE, highlightthickness=0,command=self.login)
-        self.login.place(x=750, y=560, width=80, height=35)
+        self.login.place(x=735, y=570, width=80, height=35)
 
         # Password
         self.password_label = Label(self.signup_frame, text='Password', bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))

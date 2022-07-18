@@ -213,15 +213,15 @@ class Client():
         self.image_label.place(x=25, y=20)
 
         # Self introduction
-        member1_txt = "。Nguyen Hi Huu - It's great to become wibu"
+        member1_txt = "。Nguyen Hi Huu - It's lit to become wibu"
         self.member1_label = Label(self.team_frame, text=member1_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
-        self.member1_label.place(x=50, y=420)
+        self.member1_label.place(x=50, y=421)
         member2_txt = "。Huynh Duc Thien - I'm the lucky guy"
         self.member2_label = Label(self.team_frame, text=member2_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
         self.member2_label.place(x=50, y=450)
         member3_txt = "。Le Anh Thu - Most of the time I chill'n"
         self.member3_label = Label(self.team_frame, text=member3_txt, bg=WHITE, fg=DARK_GRAY, font=('yu gothic ui', 13, 'bold'))
-        self.member3_label.place(x=50, y=480)
+        self.member3_label.place(x=50, y=479)
 
     def forgot_password(self):
         self.win = Toplevel()
@@ -241,34 +241,34 @@ class Client():
 
         # Title
         self.title = Label(self.win, text="Don't worry!", fg=BLUE, bg=WHITE,font=("yu gothic ui", 16, 'bold'))
-        self.title.place(x=100, y=10)
+        self.title.place(x=115, y=10)
 
         # Username 
         self.user_label = Label(self.win, text='Username', fg=DARK_GRAY, bg=WHITE,font=("yu gothic ui", 12, 'bold'))
-        self.user_label.place(x=20, y=45)
+        self.user_label.place(x=25, y=45)
         self.exist_username_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), highlightthickness=2)
-        self.exist_username_entry.place(x=20, y=75, width=300, height=34)
+        self.exist_username_entry.place(x=25, y=75, width=300, height=34)
         self.exist_username_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
         # New password
         self.new_password_label = Label(self.win, text='New Password', fg=DARK_GRAY, bg=WHITE, font=("yu gothic ui", 12, 'bold'))
-        self.new_password_label.place(x=20, y=125)
+        self.new_password_label.place(x=25, y=125)
         self.new_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
-        self.new_password_entry.place(x=20, y=155, width=300, height=34)
+        self.new_password_entry.place(x=25, y=155, width=300, height=34)
         self.new_password_entry.config(highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
         # Confirm password
         self.confirm_password_label = Label(self.win, text='Confirm Password', fg=DARK_GRAY, bg=WHITE, font=("yu gothic ui", 12, 'bold'))
-        self.confirm_password_label.place(x=20, y=205)
+        self.confirm_password_label.place(x=25, y=205)
         self.confirm_password_entry = Entry(self.win, fg=DARK_GRAY, font=("yu gothic ui", 12, "bold"), show='*', highlightthickness=2)
-        self.confirm_password_entry.place(x=20, y=235, width=300, height=34)
+        self.confirm_password_entry.place(x=25, y=235, width=300, height=34)
         self.confirm_password_entry.config(
             highlightbackground=DARK_GRAY, highlightcolor=DARK_GRAY)
 
         # Update password button
         self.update_pass = Button(self.win, fg=WHITE, text='Update Password', bg=BLUE, font=("yu gothic ui", 13, "bold"),
                                   cursor='hand2', activebackground=BLUE, command=self.forgot_password_action)
-        self.update_pass.place(x=75, y=285, width=200, height=50)
+        self.update_pass.place(x=80, y=285, width=200, height=50)
 
     def forgot_password_action(self):
         username = self.exist_username_entry.get()
