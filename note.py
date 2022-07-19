@@ -290,7 +290,7 @@ class Note():
                 self.text_area.place(x=95, y=52)
                 self.text_area.insert(INSERT, Content)
                 self.text_area.config(state=DISABLED)
-            else:
+            elif self.type == "File":
                 messagebox.showinfo(title="Information!", message="You can only view text and image type!")
 
         except:
