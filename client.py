@@ -279,7 +279,7 @@ class Client():
 
     def login_action(self):
         while self.running:
-            try:
+            # try:
                 username = self.username_entry.get()
                 password = self.password_entry.get()
                 self.user_info = str(["LOG-IN", username, password])
@@ -293,12 +293,12 @@ class Client():
                         Note(self.root, self.client, self.user_info)
                 else:
                     break
-            except ConnectionAbortedError:
-                break
-            except:
-                print("[ERROR]: An error occurred!")
-                self.client.close()
-                break
+            # except ConnectionAbortedError:
+            #     break
+            # except:
+            #     print("[ERROR]: An error occurred!")
+            #     self.client.close()
+            #     break
 
     def sign_up(self):
         self.master = Toplevel()

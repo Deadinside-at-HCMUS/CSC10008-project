@@ -8,7 +8,7 @@ import json
 # Server set up
 IP = '127.0.0.1'
 PORT = 5005
-BUFFER_SIZE = 1000000
+BUFFER_SIZE = 41000000
 FORMAT = 'utf-8'
 
 # Create Socket (TCP) Connection
@@ -99,7 +99,7 @@ def isExistFile(username, files):
 def addNote(username, title, content, note_id):
     file = open("./note.json")
     user_note = json.load(file)
-    user_note[username]["note"].append({"id": note_id, "title": title, "content": content})
+    user_note[username]["note"].append({"_id": note_id, "title": title, "content": content})
     json_object = json.dumps(user_note, indent=4)
     with open("./note.json", "w") as fileOut:
         fileOut.write(json_object)
@@ -108,7 +108,7 @@ def addNote(username, title, content, note_id):
 def addImage(username, image, imageID):
     file = open("./note.json")
     user_image = json.load(file)
-    user_image[username]["image"].append({"id": imageID, "name": image})
+    user_image[username]["image"].append({"_id": imageID, "name": image})
     json_object = json.dumps(user_image, indent=4)
     with open("./note.json", "w") as fileOut:
         fileOut.write(json_object)
@@ -117,7 +117,7 @@ def addImage(username, image, imageID):
 def addFile(username, files, fileID):
     file = open("./note.json")
     users_file = json.load(file)
-    users_file[username]["file"].append({"id": fileID, "name": files})
+    users_file[username]["file"].append({"_id": fileID, "name": files})
     json_object = json.dumps(users_file, indent=4)
     with open("./note.json", "w") as fileOut:
         fileOut.write(json_object)
@@ -128,18 +128,18 @@ def deleteNote(username, index, type):
     user_note = json.load(file)
     if type == "Text":
         for note in user_note[username]["note"]:
-            if note["id"] == index:
+            if note["_id"] == index:
                 user_note[username]["note"].remove(note)
                 break
     elif type == "Image":
         for img in user_note[username]["image"]:
-            if img["id"] == index:
+            if img["_id"] == index:
                 os.remove(f"./user_data/{username}/{img['name']}")
                 user_note[username]["image"].remove(img)
                 break
     elif type == "File":
         for file in user_note[username]["file"]:
-            if file["id"] == index:
+            if file["_id"] == index:
                 os.remove(f"./user_data/{username}/{file['name']}")
                 user_note[username]["file"].remove(file)
                 break
@@ -302,21 +302,21 @@ def handle(client):
                 user_note = json.load(file)
                 if type == "Image":
                     for user in user_note[username]["image"]:
-                        if user["id"] == index:
+                        if user["_id"] == index:
                             with open(f"./user_data/{username}/{user['name']}", 'rb') as f:
                                 client.send(f.read())
                                 f.close()
                             break
                 elif type == "File":
                     for user in user_note[username]["file"]:
-                        if user["id"] == index:
+                        if user["_id"] == index:
                             with open(f"./user_data/{username}/{user['name']}", 'rb') as f:
                                 client.send(f.read())
                                 f.close()
                             break
-                elif type == "Note":
+                else:
                     for user in user_note[username]["note"]:
-                        if user["id"] == index:
+                        if user["_id"] == index:
                             client.send(
                                 str([user["title"], user["content"]]).encode(FORMAT))
                             break
@@ -332,7 +332,7 @@ def handle(client):
                         client.send("Image successfully created!".encode(FORMAT))
                         addImage(name, image, image_id)
                         with open(f'./user_data/{name}/' + image, 'wb') as f:
-                            data = client.recv(BUFFER_SIZE)
+                            data = client.recv(41000000)
                             f.write(data)
                             f.close()
                     else:
@@ -347,21 +347,21 @@ def handle(client):
                 user_note = json.load(file)
                 if type == "Image":
                     for user in user_note[username]["image"]:
-                        if user["id"] == note_id:
+                        if user["_id"] == note_id:
                             with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
                                 client.send(f.read())
                                 f.close()
                             break
                 elif type == "File":
                     for user in user_note[username]["file"]:
-                        if user["id"] == note_id:
+                        if user["_id"] == note_id:
                             with open(f'./user_data/{username}/{user["name"]}', 'rb') as f:
                                 client.send(f.read().encode(FORMAT))
                                 f.close()
                             break
                 elif type == "Text":
                     for user in user_note[username]["note"]:
-                        if user["id"] == note_id:
+                        if user["_id"] == note_id:
                             client.send(
                                 str([user["title"], user["content"]]).encode(FORMAT))
                             break
