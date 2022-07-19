@@ -212,14 +212,14 @@ class Note():
                 break
 
     def delete(self):
-        # try:
+        try:
             self.task_index = self.tree.selection()[0]
             self.id = self.tree.item(self.task_index)['values'][0]
             self.type = self.tree.item(self.task_index)['values'][1]
             self.client.send(str(["DELETE-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             self.tree.delete(self.task_index)
-        # except:
-        #     messagebox.showwarning(title="Warning!", message="You must select a note!")
+        except:
+            messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def upload_image(self):
         img_path = askopenfilename(title='Select Image',filetypes=[("image", ".jpeg"), ("image", ".png"), ("image", ".jpg")])
