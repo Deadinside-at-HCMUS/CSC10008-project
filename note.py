@@ -212,14 +212,14 @@ class Note():
                 break
 
     def delete(self):
-        try:
+        # try:
             self.task_index = self.tree.selection()[0]
             self.id = self.tree.item(self.task_index)['values'][0]
             self.type = self.tree.item(self.task_index)['values'][1]
             self.client.send(str(["DELETE-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
             self.tree.delete(self.task_index)
-        except:
-            messagebox.showwarning(title="Warning!", message="You must select a note!")
+        # except:
+        #     messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def upload_image(self):
         img_path = askopenfilename(title='Select Image',filetypes=[("image", ".jpeg"), ("image", ".png"), ("image", ".jpg")])
@@ -249,50 +249,53 @@ class Note():
 
     def view(self):
         try:
-            self.task_index = self.tree.selection()[0]
-            self.id = self.tree.item(self.task_index)['values'][0]
-            self.type = self.tree.item(self.task_index)['values'][1]
-            self.file_name = self.tree.item(self.task_index)['values'][2]
-            self.file_name = self.file_name[8:]
-            self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
-            if self.type == "Image":
-                data = self.client.recv(BUFFER_SIZE)
-                img = io.BytesIO(data)
-                image = Image.open(img)
-                image.show()
-            elif self.type == "Text":
-                data = self.client.recv(BUFFER_SIZE)
-                data = eval(data)
-                Topic = data[0]
-                Content = data[1]
-                self.win = Toplevel()
-                window_width = 500
-                window_height = 300
-                screen_width = self.win.winfo_screenwidth()
-                screen_height = self.win.winfo_screenheight()
-                position_top = int(screen_height / 4 - window_height / 4)
-                position_right = int(screen_width / 2 - window_width / 2)
-                self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-                self.win.title('Text')
-                self.win.configure(background=WHITE)
-                self.win.resizable(0, 0)
+            while True:
+                self.task_index = self.tree.selection()[0]
+                self.id = self.tree.item(self.task_index)['values'][0]
+                self.type = self.tree.item(self.task_index)['values'][1]
+                self.file_name = self.tree.item(self.task_index)['values'][2]
+                self.file_name = self.file_name[8:]
+                self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
+                if self.type == "Image":
+                    data = self.client.recv(BUFFER_SIZE)
+                    img = io.BytesIO(data)
+                    image = Image.open(img)
+                    image.show()
+                    break
+                elif self.type == "Text":
+                    data = self.client.recv(BUFFER_SIZE)
+                    data = eval(data)
+                    Topic = data[0]
+                    Content = data[1]
+                    self.win = Toplevel()
+                    window_width = 500
+                    window_height = 300
+                    screen_width = self.win.winfo_screenwidth()
+                    screen_height = self.win.winfo_screenheight()
+                    position_top = int(screen_height / 4 - window_height / 4)
+                    position_right = int(screen_width / 2 - window_width / 2)
+                    self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+                    self.win.title('Text')
+                    self.win.configure(background=WHITE)
+                    self.win.resizable(0, 0)
 
-                self.topic_label = Label(self.win, text='Topic:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
-                self.topic_label.place(x=15, y=12)
-                self.topic_area = Label(self.win, text=Topic, font=('yu gothic ui', 12), bg=WHITE)
-                self.topic_area.place(x=95, y=12)
+                    self.topic_label = Label(self.win, text='Topic:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                    self.topic_label.place(x=15, y=12)
+                    self.topic_area = Label(self.win, text=Topic, font=('yu gothic ui', 12), bg=WHITE)
+                    self.topic_area.place(x=95, y=12)
 
-                self.input_label = Label(self.win, text='Notes:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
-                self.input_label.place(x=15, y=52)
+                    self.input_label = Label(self.win, text='Notes:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                    self.input_label.place(x=15, y=52)
 
-                self.text_area = scrolledtext.ScrolledText(self.win, width=35, height=12, font=('yu gothic ui', 12))
-                self.text_area.grid(column=0, pady=10, padx=10)
-                self.text_area.place(x=95, y=52)
-                self.text_area.insert(INSERT, Content)
-                self.text_area.config(state=DISABLED)
-            elif self.type == "File":
-                messagebox.showinfo(title="Information!", message="You can only view text and image type!")
-                break
+                    self.text_area = scrolledtext.ScrolledText(self.win, width=35, height=12, font=('yu gothic ui', 12))
+                    self.text_area.grid(column=0, pady=10, padx=10)
+                    self.text_area.place(x=95, y=52)
+                    self.text_area.insert(INSERT, Content)
+                    self.text_area.config(state=DISABLED)
+                    break
+                else:
+                    messagebox.showinfo(title="Information!", message="You can only view text and image type!")
+                    break
         except:
             messagebox.showwarning(title="Warning!", message="You must select a note!")
 
