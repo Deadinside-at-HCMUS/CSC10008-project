@@ -248,11 +248,13 @@ class Note():
                 break
 
     def view(self):
-        try:
-            while True:
-                self.task_index = self.tree.selection()[0]
+        self.task_index = self.tree.selection()[0]
+        self.type = self.tree.item(self.task_index)['values'][1]
+        if self.type == "File":
+            messagebox.showinfo(title="Information!", message="You can only view text and image type!")
+        else: 
+            try:
                 self.id = self.tree.item(self.task_index)['values'][0]
-                self.type = self.tree.item(self.task_index)['values'][1]
                 self.file_name = self.tree.item(self.task_index)['values'][2]
                 self.file_name = self.file_name[8:]
                 self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
@@ -261,7 +263,6 @@ class Note():
                     img = io.BytesIO(data)
                     image = Image.open(img)
                     image.show()
-                    break
                 elif self.type == "Text":
                     data = self.client.recv(BUFFER_SIZE)
                     data = eval(data)
@@ -292,12 +293,8 @@ class Note():
                     self.text_area.place(x=95, y=52)
                     self.text_area.insert(INSERT, Content)
                     self.text_area.config(state=DISABLED)
-                    break
-                else:
-                    messagebox.showinfo(title="Information!", message="You can only view text and image type!")
-                    break
-        except:
-            messagebox.showwarning(title="Warning!", message="You must select a note!")
+            except:
+                messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def download(self):
         file_path = askdirectory(title="Select Folder")
