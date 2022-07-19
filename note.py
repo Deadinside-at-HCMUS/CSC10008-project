@@ -292,7 +292,7 @@ class Note():
                 self.text_area.config(state=DISABLED)
             elif self.type == "File":
                 messagebox.showinfo(title="Information!", message="You can only view text and image type!")
-
+                break
         except:
             messagebox.showwarning(title="Warning!", message="You must select a note!")
 
