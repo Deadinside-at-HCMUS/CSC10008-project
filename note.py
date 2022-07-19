@@ -148,7 +148,7 @@ class Note():
         self.download_btn.place(x=0, y=110)
 
         self.view_btn = Button(self.frame2, width=8, pady=8, text='View', font=('yu gothic ui', 13, 'bold'),
-                               cursor="hand2", bg=PINK, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.view)
+                               cursor="hand2", bg=PINK, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.check_type)
         self.view_btn.place(x=133, y=110)
 
         self.delete_btn = Button(self.frame2, width=8, pady=8, text='Delete', font=('yu gothic ui', 13, 'bold'),
@@ -247,54 +247,60 @@ class Note():
                 messagebox.showwarning(title="Warning!", message="You must enter a image!")
                 break
 
-    def view(self):
+    def check_type(self):
         self.task_index = self.tree.selection()[0]
         self.type = self.tree.item(self.task_index)['values'][1]
         if self.type == "File":
-            messagebox.showinfo(title="Information!", message="You can only view text and image type!")
-        else: 
-            try:
-                self.id = self.tree.item(self.task_index)['values'][0]
-                self.file_name = self.tree.item(self.task_index)['values'][2]
-                self.file_name = self.file_name[8:]
-                self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
-                if self.type == "Image":
-                    data = self.client.recv(BUFFER_SIZE)
-                    img = io.BytesIO(data)
-                    image = Image.open(img)
-                    image.show()
-                elif self.type == "Text":
-                    data = self.client.recv(BUFFER_SIZE)
-                    data = eval(data)
-                    Topic = data[0]
-                    Content = data[1]
-                    self.win = Toplevel()
-                    window_width = 500
-                    window_height = 300
-                    screen_width = self.win.winfo_screenwidth()
-                    screen_height = self.win.winfo_screenheight()
-                    position_top = int(screen_height / 4 - window_height / 4)
-                    position_right = int(screen_width / 2 - window_width / 2)
-                    self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-                    self.win.title('Text')
-                    self.win.configure(background=WHITE)
-                    self.win.resizable(0, 0)
+            messagebox.showwarning(title="Warning!", message="You can only view text and image type! Please login again!")
+            return self.stop()
+        else:
+            return self.view()
 
-                    self.topic_label = Label(self.win, text='Topic:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
-                    self.topic_label.place(x=15, y=12)
-                    self.topic_area = Label(self.win, text=Topic, font=('yu gothic ui', 12), bg=WHITE)
-                    self.topic_area.place(x=95, y=12)
+    def view(self):
+        try:
+            self.task_index = self.tree.selection()[0]
+            self.id = self.tree.item(self.task_index)['values'][0]
+            self.type = self.tree.item(self.task_index)['values'][1]
+            self.file_name = self.tree.item(self.task_index)['values'][2]
+            self.file_name = self.file_name[8:]
+            self.client.send(str(["VIEW-NOTE", self.user_info[1], self.id, self.type]).encode(FORMAT))
+            if self.type == "Image":
+                data = self.client.recv(BUFFER_SIZE)
+                img = io.BytesIO(data)
+                image = Image.open(img)
+                image.show()
+            elif self.type == "Text":
+                data = self.client.recv(BUFFER_SIZE)
+                data = eval(data)
+                Topic = data[0]
+                Content = data[1]
+                self.win = Toplevel()
+                window_width = 500
+                window_height = 300
+                screen_width = self.win.winfo_screenwidth()
+                screen_height = self.win.winfo_screenheight()
+                position_top = int(screen_height / 4 - window_height / 4)
+                position_right = int(screen_width / 2 - window_width / 2)
+                self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+                self.win.title('Text')
+                self.win.configure(background=WHITE)
+                self.win.resizable(0, 0)
 
-                    self.input_label = Label(self.win, text='Notes:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
-                    self.input_label.place(x=15, y=52)
+                self.topic_label = Label(self.win, text='Topic:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                self.topic_label.place(x=15, y=12)
+                self.topic_area = Label(self.win, text=Topic, font=('yu gothic ui', 12), bg=WHITE)
+                self.topic_area.place(x=95, y=12)
 
-                    self.text_area = scrolledtext.ScrolledText(self.win, width=35, height=12, font=('yu gothic ui', 12))
-                    self.text_area.grid(column=0, pady=10, padx=10)
-                    self.text_area.place(x=95, y=52)
-                    self.text_area.insert(INSERT, Content)
-                    self.text_area.config(state=DISABLED)
-            except:
-                messagebox.showwarning(title="Warning!", message="You must select a note!")
+                self.input_label = Label(self.win, text='Notes:', font=('yu gothic ui', 12, 'bold'), fg=DARK_GRAY, bg=WHITE)
+                self.input_label.place(x=15, y=52)
+
+                self.text_area = scrolledtext.ScrolledText(self.win, width=35, height=12, font=('yu gothic ui', 12))
+                self.text_area.grid(column=0, pady=10, padx=10)
+                self.text_area.place(x=95, y=52)
+                self.text_area.insert(INSERT, Content)
+                self.text_area.config(state=DISABLED)
+        except:
+            messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def download(self):
         file_path = askdirectory(title="Select Folder")
