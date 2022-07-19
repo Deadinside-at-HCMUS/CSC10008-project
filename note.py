@@ -14,7 +14,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 IP = '127.0.0.1'
 PORT = 5005
 FORMAT = 'utf-8'
-BUFFER_SIZE = 4100000
+BUFFER_SIZE = 100000000
 
 # Colors
 WHITE = '#ffffff'
@@ -83,8 +83,7 @@ class Note():
         self.tree.place(x=250, y=200)
         
         # Scrollbar
-        scrollbar = ttk.Scrollbar(
-            self.root, orient=VERTICAL, command=self.tree.yview)
+        scrollbar = ttk.Scrollbar(self.root, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
         scrollbar.grid(row=0, column=1, sticky='ns')
 
@@ -96,14 +95,14 @@ class Note():
         imgs = self.client_notes['image']
         self.id_count = 1
         for note in notes:
-            self.tree.insert('', 'end', values=(note['id'], "Text", f"[Topic: {note['title']}] : {note['content'] if len(note['content']) < 32 else note['content'][0:32:1] + '...'}"))
-            self.id_count = max(self.id_count, int(note['id'])) + 1
+            self.tree.insert('', 'end', values=(note['_id'], "Text", f"[Topic: {note['title']}] : {note['content'] if len(note['content']) < 32 else note['content'][0:32:1] + '...'}"))
+            self.id_count = max(self.id_count, int(note['_id'])) + 1
         for img in imgs:
-            self.tree.insert('', 'end', values=(img['id'], "Image", f"[Name]: {img['name']}"))
-            self.id_count = max(self.id_count, int(img['id'])) + 1
+            self.tree.insert('', 'end', values=(img['_id'], "Image", f"[Name]: {img['name']}"))
+            self.id_count = max(self.id_count, int(img['_id'])) + 1
         for file in files:
-            self.tree.insert('', 'end', values=(file['id'], "File", f"[Name]: {file['name']}"))
-            self.id_count = max(self.id_count, int(file['id'])) + 1
+            self.tree.insert('', 'end', values=(file['_id'], "File", f"[Name]: {file['name']}"))
+            self.id_count = max(self.id_count, int(file['_id'])) + 1
 
         self.frame1 = Frame(self.root, width=850, height=100, bg=WHITE)
         self.frame1.place(x=105, y=100)
@@ -149,7 +148,7 @@ class Note():
         self.download_btn.place(x=1, y=110)
 
         self.view_btn = Button(self.frame2, width=11, pady=8, text='View', font=('yu gothic ui', 13, 'bold'),
-                               cursor="hand2", bg=PINK, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.view)
+                               cursor="hand2", bg=PINK, fg=WHITE, border=0, relief=FLAT, highlightthickness=0, command=self.check_type)
         self.view_btn.place(x=135, y=110)
 
         self.delete_btn = Button(self.frame2, width=11, pady=8, text='Delete', font=('yu gothic ui', 13, 'bold'),
@@ -231,7 +230,7 @@ class Note():
         while self.running:
             self.user_image = str(["ADD-IMAGE", self.user_info[1], self.image, self.id_count])
             self.client.send(self.user_image.encode(FORMAT))
-            response = self.client.recv(BUFFER_SIZE).decode(FORMAT)
+            response = self.client.recv(2048).decode(FORMAT)
             if response == "Image successfully created!":
                 with open(img_path, 'rb') as f:
                     self.client.send(f.read())
@@ -247,6 +246,15 @@ class Note():
             else:
                 messagebox.showwarning(title="Warning!", message="You must enter a image!")
                 break
+
+    def check_type(self):
+        self.task_index = self.tree.selection()[0]
+        self.type = self.tree.item(self.task_index)['values'][1]
+        if self.type == "File":
+            messagebox.showwarning(title="Warning!", message="You can only view text and image type! Please login again!")
+            return self.stop()
+        else:
+            return self.view()
 
     def view(self):
         try:
@@ -292,8 +300,7 @@ class Note():
                 self.text_area.insert(INSERT, Content)
                 self.text_area.config(state=DISABLED)
         except:
-            messagebox.showwarning(
-                title="Warning!", message="You must select a note!")
+            messagebox.showwarning(title="Warning!", message="You must select a note!")
 
     def download(self):
         file_path = askdirectory(title="Select Folder")
@@ -309,10 +316,10 @@ class Note():
                 data = self.client.recv(BUFFER_SIZE).decode(FORMAT)
                 data = eval(data)
                 print(data)
-                Topic = data[0]
-                Content = data[1]
-                with open(f'{file_path}/{Topic}.txt', 'w') as f:
-                    f.add_note(Content)
+                topic = data[0]
+                content = data[1]
+                with open(f'{file_path}/{topic}.txt', 'w') as f:
+                    f.write(content)
                 f.close()
             else:
                 self.file_name = self.tree.item(self.task_index)['values'][2]
@@ -320,7 +327,7 @@ class Note():
                 self.file_name = self.file_name[len(self.file_name) - 1]
                 with open(f"{file_path}/{self.file_name}", 'wb') as f:
                     data = self.client.recv(BUFFER_SIZE)
-                    f.add_note(data)
+                    f.write(data)
                     f.close()
         except:
             messagebox.showwarning(title="Warning!", message="You must enter a file!")
