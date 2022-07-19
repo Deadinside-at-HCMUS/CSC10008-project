@@ -8,7 +8,7 @@ import json
 # Server set up
 IP = '127.0.0.1'
 PORT = 5005
-BUFFER_SIZE = 41000000
+BUFFER_SIZE = 10000000
 FORMAT = 'utf-8'
 
 # Create Socket (TCP) Connection
